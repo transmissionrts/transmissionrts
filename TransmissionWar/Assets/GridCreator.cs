@@ -34,7 +34,7 @@ public class GridCreator : MonoBehaviour {
                 Instantiate(gridPrefab, new Vector3(ix * 10 + xoffset, 0 , iy * 10 + yoffset), Quaternion.identity);
             }
 
-        Instantiate(soldierPrefab, GridPosToWorldPos(1, 1), Quaternion.identity);
+        Instantiate(soldierPrefab, GridPosToWorldPos(1, 1), Quaternion.Euler(0,180,0));
 
         Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, -1), Quaternion.identity);
 

@@ -8,14 +8,37 @@ public class SelectableUnit : MonoBehaviour {
 
     Transform selectIndicator;
 
+    MoveableUnit moveableUnit;
+    bool isMoveable;
+
 	// Use this for initialization
 	void Start () {
         TransformUtils tu = new TransformUtils();
         selectIndicator = tu.GetChildByName("SelectIndicator", transform);
-	}
+        selectIndicator.gameObject.SetActive(false);
+
+        moveableUnit = GetComponent<MoveableUnit>();
+        if (moveableUnit != null) {
+            isMoveable = true;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void Select()
+    {
+        selected = true;
+        selectIndicator.gameObject.SetActive(true);
+        if (isMoveable) {
+            moveableUnit.OnSelect();
+        }
+    }
+    public void Deselect()
+    {
+        selected = false;
+        selectIndicator.gameObject.SetActive(false);
+    }
 }

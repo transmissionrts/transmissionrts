@@ -24,6 +24,8 @@ public class UnitSelector : MonoBehaviour {
         if (hitTransform != null)
             if (hitTransform.name.Contains("Soldier")) {
                 Debug.Log("hit");
+                    SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
+                    su.Select();
             }
         }
     }

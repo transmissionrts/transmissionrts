@@ -285,7 +285,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ArrowMoveButton.cs" />
+    <Compile Include="Assets\ClickButton.cs" />
+    <Compile Include="Assets\Direction.cs" />
     <Compile Include="Assets\GridCreator.cs" />
+    <Compile Include="Assets\MoveableUnit.cs" />
     <Compile Include="Assets\SelectableUnit.cs" />
     <Compile Include="Assets\SoldierController.cs" />
     <Compile Include="Assets\TransformUtils.cs" />
