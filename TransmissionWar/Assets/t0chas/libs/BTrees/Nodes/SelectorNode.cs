@@ -65,5 +65,10 @@ namespace FluentBehaviourTree
         {
             children.Add(child);
         }
+
+		public override string ToString ()
+		{
+			return this.name;
+		}
     }
 }
