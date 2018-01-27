@@ -15,6 +15,9 @@ public struct ScoredSoldier{
 
 public class AIOpponent : MonoBehaviour {
 
+	public PlayerId playerId;
+
+
 	IBehaviourTreeNode rootNode;
 
 	GameManager gameManager;
@@ -56,6 +59,8 @@ public class AIOpponent : MonoBehaviour {
 		this.aiData.myScoredUnits = this.ScoreUnits(myUnits, 0);
 
 		this.rootNode.Tick (new TimeData (Time.deltaTime));
+
+		this.gameManager.EndTurn (this.playerId);
 	}
 
 	IBehaviourTreeNode BuildSimpleAI(){
@@ -63,36 +68,36 @@ public class AIOpponent : MonoBehaviour {
 		IBehaviourTreeNode node = treeBuilder
 			.Sequence ("simpleAI", true)
 			.Do ("DoWeHaveUnits", t => {
-				if(this.aiData != null && this.aiData.myScoredUnits != null && this.aiData.myScoredUnits.Count > 0)
-					return BehaviourTreeStatus.Success;
-				return BehaviourTreeStatus.Failure;
-			})
-			.Do("SendCommandTo", t=>{
-				Grid grid = this.gameManager.GetGrid ();
+			if (this.aiData != null && this.aiData.myScoredUnits != null && this.aiData.myScoredUnits.Count > 0)
+				return BehaviourTreeStatus.Success;
+			return BehaviourTreeStatus.Failure;
+		})
+			.Do ("SendCommandTo", t => {
+			Grid grid = this.gameManager.GetGrid ();
 
-				foreach(ScoredSoldier scored in this.aiData.myScoredUnits){
-					List<Movement> posibleMoves = new List<Movement>();
-					if(grid.CanMakeMove(scored.Soldier, Movement.Up))
-						posibleMoves.Add(Movement.Up);
-					if(grid.CanMakeMove(scored.Soldier, Movement.Down))
-						posibleMoves.Add(Movement.Down);
-					if(grid.CanMakeMove(scored.Soldier, Movement.Left))
-						posibleMoves.Add(Movement.Left);
-					if(grid.CanMakeMove(scored.Soldier, Movement.Right))
-						posibleMoves.Add(Movement.Right);
+			foreach (ScoredSoldier scored in this.aiData.myScoredUnits) {
+				List<int> posibleMoves = new List<int> ();
+				if (grid.CanMakeMove (scored.Soldier, Direction.UP))
+					posibleMoves.Add (Direction.UP);
+				if (grid.CanMakeMove (scored.Soldier, Direction.DOWN))
+					posibleMoves.Add (Direction.DOWN);
+				if (grid.CanMakeMove (scored.Soldier, Direction.LEFT))
+					posibleMoves.Add (Direction.LEFT);
+				if (grid.CanMakeMove (scored.Soldier, Direction.RIGHT))
+					posibleMoves.Add (Direction.RIGHT);
 
-					if(posibleMoves.Count == 0){
-						//Dam!
-						continue;
-					}
-
-					int selectedMove = Random.Range(0, posibleMoves.Count -1);
-
-					this.gameManager.IssueCommandTo(scored.Soldier, posibleMoves[selectedMove]);
-					return BehaviourTreeStatus.Success;
+				if (posibleMoves.Count == 0) {
+					//Dam!
+					continue;
 				}
-				return BehaviourTreeStatus.Failure;
-			})
+
+				int selectedMove = Random.Range (0, posibleMoves.Count - 1);
+
+				this.gameManager.IssueCommandTo (this.playerId, scored.Soldier, posibleMoves [selectedMove]);
+				return BehaviourTreeStatus.Success;
+			}
+			return BehaviourTreeStatus.Failure;
+		})
 			.End ()
 			.Build ();
 		return node;

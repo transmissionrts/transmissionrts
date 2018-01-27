@@ -2,13 +2,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Movement{
-	Up,
-	Down,
-	Left,
-	Right,
-}
-
 public class Grid{
 
 	public int Width;
@@ -29,25 +22,30 @@ public class Grid{
 		return true;
 	}
 
-	public bool CanMakeMove(Soldier soldier, Movement movement){
+	public bool CanMakeMove(Soldier soldier, int movementDirection){
 		Vector2 soldierPos = soldier.Position;
 		Vector2 targetPos = soldierPos;
-		switch(movement){
-		case Movement.Up:
+		switch(movementDirection){
+		case Direction.UP:
 			targetPos.y += 1;
 			break;
-		case Movement.Down:
+		case Direction.DOWN:
 			targetPos.y -= 1;
 			break;
-		case Movement.Left:
+		case Direction.LEFT:
 			targetPos.x -= 1;
 			break;
-		case Movement.Right:
+		case Direction.RIGHT:
 			targetPos.x += 1;
 			break;
 		}
 		return this.IsTileFree (targetPos);
 	}
+}
+
+public enum PlayerId{
+	PlayerA = 0,
+	PlayerB = 1
 }
 
 public class GameManager : MonoBehaviour {
@@ -124,7 +122,11 @@ public class GameManager : MonoBehaviour {
 		SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
 	}
 
-	public void IssueCommandTo(Soldier soldier, Movement movement){
+	public void IssueCommandTo(PlayerId playerId, Soldier soldier, int movementDirection){
+		//TODO
+	}
+
+	public void EndTurn(PlayerId playerId){
 		//TODO
 	}
 }
