@@ -2,6 +2,54 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum Movement{
+	Up,
+	Down,
+	Left,
+	Right,
+}
+
+public class Grid{
+
+	public int Width;
+	public int Height;
+
+	public bool IsValidPos(Vector2 pos){
+		if (pos.x < 0 || pos.x > this.Width)
+			return false;
+		if (pos.y < 0 || pos.y > this.Height)
+			return false;
+		return true;
+	}
+
+	public bool IsTileFree(Vector2 pos){
+		if (!this.IsValidPos (pos))
+			return false;
+		//TODO
+		return true;
+	}
+
+	public bool CanMakeMove(Soldier soldier, Movement movement){
+		Vector2 soldierPos = soldier.Position;
+		Vector2 targetPos = soldierPos;
+		switch(movement){
+		case Movement.Up:
+			targetPos.y += 1;
+			break;
+		case Movement.Down:
+			targetPos.y -= 1;
+			break;
+		case Movement.Left:
+			targetPos.x -= 1;
+			break;
+		case Movement.Right:
+			targetPos.x += 1;
+			break;
+		}
+		return this.IsTileFree (targetPos);
+	}
+}
+
 public class GameManager : MonoBehaviour {
 	public enum GameState {
 		InProgress,
@@ -13,6 +61,10 @@ public class GameManager : MonoBehaviour {
 	private bool teamBFinished = false;
 	private List<Soldier> soldiers;
 	private GridCreator grid;
+
+	public Grid GetGrid(){
+		return new Grid ();//TODO
+	}
 
     private static GameManager instance;
     public static GameManager Instance
@@ -70,5 +122,9 @@ public class GameManager : MonoBehaviour {
 
 	void Finish() {
 		SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+	}
+
+	public void IssueCommandTo(Soldier soldier, Movement movement){
+		//TODO
 	}
 }
