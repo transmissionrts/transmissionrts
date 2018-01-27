@@ -286,7 +286,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GridCreator.cs" />
+    <Compile Include="Assets\SelectableUnit.cs" />
     <Compile Include="Assets\SoldierController.cs" />
+    <Compile Include="Assets\TransformUtils.cs" />
     <Compile Include="Assets\UnitSelector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
