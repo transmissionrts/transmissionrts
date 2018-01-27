@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour {
 	}
     private bool teamAFinished = false;
 	private bool teamBFinished = false;
-	private List<Soldier> soldiers;
+	private List<SoldierController> soldiers;
 	private GridCreator grid;
 
 	public Grid GetGrid(){
