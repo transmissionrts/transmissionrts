@@ -6,6 +6,8 @@ public class UnitSelector : MonoBehaviour {
 
     Camera cam;
 
+    Transform selectedUnit;
+
 	// Use this for initialization
 	void Start () {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -26,6 +28,7 @@ public class UnitSelector : MonoBehaviour {
                 Debug.Log("hit");
                     SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
                     su.Select();
+                    selectedUnit = hitTransform;
             }
         }
     }

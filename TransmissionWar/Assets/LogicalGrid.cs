@@ -12,9 +12,16 @@ public class LogicalGrid : MonoBehaviour
 
 		public Vector2 Position { get { return this.position; } }
 
+		public List<Soldier> occupiedBy { get; private set; }
+
 		public Tile (Vector2 pos)
 		{
 			this.position = pos;
+			this.occupiedBy = new List<Soldier>();
+		}
+
+		public bool IsFree(){
+			return this.occupiedBy.Count == 0;
 		}
 	}
 
@@ -58,12 +65,18 @@ public class LogicalGrid : MonoBehaviour
 		return true;
 	}
 
+	public Tile GetTile(Vector2 pos){
+		if (!this.IsValidPos (pos))
+			return null;
+		return this.tiles [(int)pos.x, (int)pos.y];
+	}
+
 	public bool IsTileFree (Vector2 pos)
 	{
-		if (!this.IsValidPos (pos))
+		Tile tile = this.GetTile (pos);
+		if (tile == null)
 			return false;
-		//TODO
-		return true;
+		return tile.IsFree();
 	}
 
 	public bool CanMakeMove (Soldier soldier, int movementDirection)

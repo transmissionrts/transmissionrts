@@ -31,5 +31,10 @@ namespace FluentBehaviourTree
         {
             return fn(time);
         }
+
+		public override string ToString ()
+		{
+			return this.name;
+		}
     }
 }

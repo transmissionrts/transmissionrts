@@ -59,5 +59,10 @@ namespace FluentBehaviourTree
 
             this.childNode = child;
         }
+
+		public override string ToString ()
+		{
+			return this.name;
+		}
     }
 }
