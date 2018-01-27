@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SoldierController : MonoBehaviour {
 
-    bool selected;
+    SelectableUnit selectable;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        selectable = GetComponent<SelectableUnit>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 }
