@@ -24,7 +24,7 @@ public class AIOpponent : MonoBehaviour {
 
 	List<ScoredSoldier> ScoreUnits(List<Soldier> units, int targetGridRow){
 
-		Grid grid = this.gameManager.GetGrid ();
+		LogicalGrid grid = this.gameManager.GetGrid ();
 
 		List<ScoredSoldier> scoredSoldiers = new List<ScoredSoldier>();
 		for (int i = 0; i < units.Count; i++) {
@@ -73,7 +73,7 @@ public class AIOpponent : MonoBehaviour {
 			return BehaviourTreeStatus.Failure;
 		})
 			.Do ("SendCommandTo", t => {
-			Grid grid = this.gameManager.GetGrid ();
+			LogicalGrid grid = this.gameManager.GetGrid ();
 
 			foreach (ScoredSoldier scored in this.aiData.myScoredUnits) {
 				List<int> posibleMoves = new List<int> ();

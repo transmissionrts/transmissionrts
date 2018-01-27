@@ -31,19 +31,17 @@ public class GridCreator : MonoBehaviour {
 
         for (int ix = 0; ix < gridWidth; ix++)
             for (int iy = 0; iy < gridHeight; iy++) {
-                Instantiate(gridPrefab, new Vector3(ix * 10 + xoffset, 0 , iy * 10 + yoffset), Quaternion.identity);
+				Transform tile = Instantiate(gridPrefab, new Vector3(ix * 10 + xoffset, 0 , iy * 10 + yoffset), Quaternion.identity);
+				tile.parent = this.transform;
             }
 
         Instantiate(soldierPrefab, GridPosToWorldPos(1, 1), Quaternion.Euler(0,180,0));
 
         Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, -1), Quaternion.identity);
 
+		LogicalGrid grid = this.gameObject.AddComponent<LogicalGrid> ();
+		grid.Setup (this.gridWidth, this.gridHeight);
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 
     Vector3 GridPosToWorldPos(int x, int y) {
 
@@ -60,5 +58,8 @@ public class GridCreator : MonoBehaviour {
 
         return new Vector3(x * tileWidth + xoffset, 1, y * tileHeight + yoffset);
     }
-    
+
+	public LogicalGrid GetGrid(){
+		return this.GetComponent<LogicalGrid> ();
+	}    
 }

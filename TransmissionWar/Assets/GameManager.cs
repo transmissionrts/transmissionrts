@@ -2,47 +2,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Grid{
-
-	public int Width;
-	public int Height;
-
-	public bool IsValidPos(Vector2 pos){
-		if (pos.x < 0 || pos.x > this.Width)
-			return false;
-		if (pos.y < 0 || pos.y > this.Height)
-			return false;
-		return true;
-	}
-
-	public bool IsTileFree(Vector2 pos){
-		if (!this.IsValidPos (pos))
-			return false;
-		//TODO
-		return true;
-	}
-
-	public bool CanMakeMove(Soldier soldier, int movementDirection){
-		Vector2 soldierPos = soldier.Position;
-		Vector2 targetPos = soldierPos;
-		switch(movementDirection){
-		case Direction.UP:
-			targetPos.y += 1;
-			break;
-		case Direction.DOWN:
-			targetPos.y -= 1;
-			break;
-		case Direction.LEFT:
-			targetPos.x -= 1;
-			break;
-		case Direction.RIGHT:
-			targetPos.x += 1;
-			break;
-		}
-		return this.IsTileFree (targetPos);
-	}
-}
-
 public enum PlayerId{
 	PlayerA = 0,
 	PlayerB = 1
@@ -58,10 +17,12 @@ public class GameManager : MonoBehaviour {
     private bool teamAFinished = false;
 	private bool teamBFinished = false;
 	private List<SoldierController> soldiers;
-	private GridCreator grid;
+	private GridCreator gridCreator;
 
-	public Grid GetGrid(){
-		return new Grid ();//TODO
+	[SerializeField]
+	private LogicalGrid logicalGrid;
+	public LogicalGrid GetGrid(){
+		return this.logicalGrid;
 	}
 
     private static GameManager instance;
@@ -93,6 +54,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		// TODO: initialize soldier & code	
+		this.logicalGrid = this.gridCreator.GetGrid();
 	}
 	
 	// Update is called once per frame
@@ -100,7 +62,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void SoliderUpdate(int team, Vector2 soldierPos) {
-		if (System.Math.Abs(soldierPos.y) == grid.gridHeight || soldierPos.y == 0) {
+		if (System.Math.Abs(soldierPos.y) == gridCreator.gridHeight || soldierPos.y == 0) {
 			if (team == 0) {
 				teamAFinished = true;
 			} else {
