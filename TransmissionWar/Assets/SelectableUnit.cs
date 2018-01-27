@@ -31,6 +31,7 @@ public class SelectableUnit : MonoBehaviour {
             moveableUnit.OnSelect();
         }
     }
+
     public void Deselect()
     {
         selected = false;
