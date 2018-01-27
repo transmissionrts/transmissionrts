@@ -92,11 +92,6 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-
-	void Finish() {
-		SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
-	}
-
 	public void IssueCommandTo(PlayerId playerId, Soldier soldier, int movementDirection){
 		//TODO
 	}
