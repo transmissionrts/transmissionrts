@@ -69,13 +69,17 @@ public class GameManager : MonoBehaviour {
     {
         get
         {
-            if (instance == null)
-            {
-                instance = new GameManager();
-            }
             return instance;
         }
     }
+
+	void Awake(){
+		if (instance != null) {
+			Debug.LogErrorFormat (this, "Duplicate GameManager instances [{0}, {1}]", this.name, instance.name);
+			return;
+		}
+		instance = this;//registering self to static instance
+	}
 
     private GameState currentGameState = GameState.InProgress;
     public GameState CurrentGameState
