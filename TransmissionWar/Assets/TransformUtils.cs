@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransformUtils : MonoBehaviour {
+public class TransformUtils {
 
     public Transform GetChildByName(string name, Transform thisTransform)
     {
