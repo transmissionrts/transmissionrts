@@ -287,11 +287,26 @@
   <ItemGroup>
     <Compile Include="Assets\ArrowMoveButton.cs" />
     <Compile Include="Assets\ClickButton.cs" />
+    <Compile Include="Assets\CommandSelectorButton.cs" />
     <Compile Include="Assets\Direction.cs" />
+    <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\GridCreator.cs" />
     <Compile Include="Assets\MoveableUnit.cs" />
     <Compile Include="Assets\SelectableUnit.cs" />
     <Compile Include="Assets\SoldierController.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\BehaviourTreeBuilder.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\BehaviourTreeStatus.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\IBehaviourTreeNode.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\IParentBehaviourTreeNode.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\Nodes\ActionNode.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\Nodes\InverterNode.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\Nodes\ParallelNode.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\Nodes\SelectorNode.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\Nodes\SequenceNode.cs" />
+    <Compile Include="Assets\t0chas\libs\BTrees\TimeData.cs" />
+    <Compile Include="Assets\t0chas\Scripts\AIOpponent.cs" />
+    <Compile Include="Assets\t0chas\Scripts\TestBTs.cs" />
+    <Compile Include="Assets\Timer.cs" />
     <Compile Include="Assets\TransformUtils.cs" />
     <Compile Include="Assets\UnitSelector.cs" />
   </ItemGroup>

@@ -23,11 +23,6 @@ public class SelectableUnit : MonoBehaviour {
         }
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void Select()
     {
         selected = true;
