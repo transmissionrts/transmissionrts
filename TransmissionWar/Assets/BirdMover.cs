@@ -148,7 +148,8 @@ public class BirdMover : MonoBehaviour {
 	}
 
 	void dropPayload () {
-		print ("reached target, delivering payload");
+		print ("reached target, dropping envelope");
+
 		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
 		Quaternion orientation = Quaternion.Euler(0, 0, 0);
 		Vector3 dropPosition = targetPosition;
