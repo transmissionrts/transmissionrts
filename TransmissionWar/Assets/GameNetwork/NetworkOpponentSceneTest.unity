@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44659358, g: 0.49642974, b: 0.574825, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -928,7 +928,7 @@ MonoBehaviour:
   playerId: 1
   gameManager: {fileID: 0}
   birdMover: {fileID: 0}
-  ReadyForNextTurn: 0
+  readyForNextTurn: 0
   isPlayingTurn: 0
 --- !u!4 &562324559
 Transform:
@@ -986,6 +986,11 @@ Prefab:
         type: 2}
       propertyPath: birdMover
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114135231028617970, guid: 45813004073ee4324ba91948761086c7,
+        type: 2}
+      propertyPath: isNetworkedScene
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45813004073ee4324ba91948761086c7, type: 2}
