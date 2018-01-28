@@ -89,7 +89,7 @@ public class LogicalGrid : MonoBehaviour
 		var isFree = tile.IsFree();
 		string usedBy = "";
 		if (!isFree) {
-			usedBy = string.Format (" {0}[{1}]", tile.OccupiedBy.name, tile.OccupiedBy.Team);
+			usedBy = string.Format ("Name:{0},Team:{1}]", tile.OccupiedBy.name, tile.OccupiedBy.Team);
 		}
 		Debug.LogFormat ("{0}.IsTileFree({1}): {2}{3}", this.name, pos, isFree, usedBy);
 		return isFree;
@@ -121,16 +121,16 @@ public class LogicalGrid : MonoBehaviour
 	}
 		
 	public void RegisterSoldier(SoldierController soldier, Vector2 pos) {
-		Debug.LogFormat("Deregistering:: {0}", soldier.Position);
 		Tile tile = this.GetTile(soldier.Position);
 		if (tile.OccupiedBy == soldier) {
+			Debug.LogFormat("{0}:: Deregistering:: {1}", soldier.Team, soldier.Position);
 			tile.OccupiedBy = null;
 		}
 
-		Debug.LogFormat("Registered HERE:: {0}", pos);
 		tile = this.GetTile(pos);
 		tile.OccupiedBy = soldier;
 		soldier.Position = pos;
+		Debug.LogFormat("{0}:: Registered HERE:: {1}", soldier.Team, soldier.Position);
 	}
 
 	public void SetUpSoliders(IEnumerable<SoldierController> soldiers){

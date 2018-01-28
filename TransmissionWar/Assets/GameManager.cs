@@ -79,7 +79,10 @@ public class GameManager : MonoBehaviour {
 		SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
 	}
 
-	void SoliderUpdate(int team, Vector2 soldierPos) {
+	public bool SoldierUpdate(PlayerId team, Vector2 soldierPos) {
+		// TODO: fix this
+		return true;
+
 		if (System.Math.Abs(soldierPos.y) == gridCreator.gridHeight || soldierPos.y == 0) {
 			if (team == 0) {
 				teamAFinished = true;
@@ -119,7 +122,7 @@ public class GameManager : MonoBehaviour {
 	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, Direction movementDirection){
 		if (soldier.Team == playerId && this.logicalGrid.CanMakeMove(soldier, movementDirection)) {
 			var targetPos = this.logicalGrid.GetTargetPos(soldier.Position, movementDirection);
-			Debug.LogFormat("MAKE MOVE {0}, {1}", soldier.Position, movementDirection);
+			Debug.LogFormat("{0}:: MAKE MOVE {1}, {2}", playerId, soldier.Position, movementDirection);
 			CommandPayload command = new CommandPayload () {
 				Target = soldier.transform,
 				Solider = soldier,
@@ -128,7 +131,7 @@ public class GameManager : MonoBehaviour {
 			};
 
 			var player = this.GetPlayer (playerId);
-			this.logicalGrid.RegisterSoldier(soldier, targetPos);
+			// this.logicalGrid.RegisterSoldier(soldier, targetPos);
 			player.BirdMover.SetCommand (command);
 		} else {
 			Debug.LogFormat("CANNOT MAKE MOVE {0}, {1}", soldier.Position, movementDirection);
