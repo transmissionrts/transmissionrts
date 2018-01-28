@@ -49,6 +49,7 @@ public class GridCreator : MonoBehaviour
 
             controller.Team = (PlayerId) team;
             controller.Position = new Vector2(startX + i, startY);
+			Debug.LogFormat (controller, "SpawnSoldiers {0}[{1}] @ {2}", controller.name, controller.Team, controller.Position);
 
             // register soldier last after proper state
             logicalGrid.RegisterSoldier(soldier.GetComponent<SoldierController>(), new Vector2(startX + i, startY));
