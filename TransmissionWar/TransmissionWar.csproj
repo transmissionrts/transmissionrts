@@ -286,11 +286,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ArrowMoveButton.cs" />
+    <Compile Include="Assets\BirdMover.cs" />
     <Compile Include="Assets\ClickButton.cs" />
     <Compile Include="Assets\CommandSelectorButton.cs" />
     <Compile Include="Assets\Direction.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\GridCreator.cs" />
+    <Compile Include="Assets\LogicalGrid.cs" />
     <Compile Include="Assets\MoveableUnit.cs" />
     <Compile Include="Assets\SelectableUnit.cs" />
     <Compile Include="Assets\SoldierController.cs" />

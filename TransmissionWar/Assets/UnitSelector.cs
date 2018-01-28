@@ -6,7 +6,7 @@ public class UnitSelector : MonoBehaviour {
 
     Camera cam;
 
-    Transform selectedUnit;
+    public Transform selectedUnit;
 
 	// Use this for initialization
 	void Start () {

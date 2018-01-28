@@ -6,7 +6,7 @@ public class MoveableUnit : MonoBehaviour {
 
     Transform upArrow, downArrow, leftArrow, rightArrow, upArrowSelected, downArrowSelected, leftArrowSelected, rightArrowSelected;
 
-    int command;
+    public int command;
 
     float tileWidth, tileHeight;
 
@@ -34,12 +34,7 @@ public class MoveableUnit : MonoBehaviour {
         rightArrow.gameObject.SetActive(false);
         */
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
+    
     public void OnSelect() {
         //upArrow.gameObject.SetActive(true);
         //downArrow.gameObject.SetActive(false);
@@ -77,21 +72,24 @@ public class MoveableUnit : MonoBehaviour {
         switch (command) {
 
             case Direction.UP:
-                transform.position += new Vector3(0, 0, -tileHeight);
-                break;
-
-            case Direction.DOWN:
                 transform.position += new Vector3(0, 0, tileHeight);
                 break;
 
+            case Direction.DOWN:
+                transform.position += new Vector3(0, 0, -tileHeight);
+                break;
+
             case Direction.LEFT:
-                transform.position += new Vector3(tileWidth, 0, 0);
+                transform.position += new Vector3(-tileWidth, 0, 0);
                 break;
 
             case Direction.RIGHT:
-                transform.position += new Vector3(-tileWidth, 0, 0);
+                transform.position += new Vector3(tileWidth, 0, 0);
                 break;
-            
+                
+            case Direction.NONE:
+
+                break;
         }
 
 
