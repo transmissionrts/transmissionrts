@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 568dab8df1960fc4aabf7d6b57ddfd64, type: 2}
+  - {fileID: 2100000, guid: 0a78f4c20e84b49a68eb25bb9dc85919, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,8 +131,7 @@ MonoBehaviour:
   flapForce: 10
   flapInterval: 0.5
   descentRatio: 2.5
-  dropAltitude: 0
-  commandSelectorButtonTransform: {fileID: 0}
+  dropAltitude: 5
   cruisingAltitude: 14
   noEnvelopeMaterial: {fileID: 2100000, guid: 0a78f4c20e84b49a68eb25bb9dc85919, type: 2}
   envelope: {fileID: 4773169202414176, guid: 437d9013c670142bdb9c47961beab2b8, type: 2}
