@@ -54,3 +54,5 @@ MonoBehaviour:
   playerId: 1
   gameManager: {fileID: 0}
   birdMover: {fileID: 0}
+  ReadyForNextTurn: 0
+  isPlayingTurn: 0

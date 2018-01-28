@@ -55,10 +55,14 @@ MonoBehaviour:
   kingPrefab: {fileID: 4685528578767952, guid: 90f07cf66bb2cf74587c6f2158315695, type: 2}
   pigeonPrefab: {fileID: 4003429183364166, guid: dc0b861acff88194b8c72f5f0dc38cdc,
     type: 2}
-  soldierPrefab: {fileID: 4408686485049530, guid: f9b5e897407a1264aa748444c60e0cdd,
+  catSoldierPrefab: {fileID: 4665295011801368, guid: 9e994000168a5754586353ce7aefdb24,
+    type: 2}
+  dogSoldierPrefab: {fileID: 4115157207437104, guid: d97bdad4d9c02d9459e2449d389ddcab,
     type: 2}
   gridWidth: 10
   gridHeight: 10
   soldierCount: 10
   tileWidth: 10
   tileHeight: 10
+  teamA: []
+  teamB: []

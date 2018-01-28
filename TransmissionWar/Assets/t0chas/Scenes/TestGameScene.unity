@@ -428,12 +428,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 114441350603981478, guid: 215aa314d060f42fe84d47a758252a6f,
-        type: 2}
-      propertyPath: birdMoverPrefab
-      value: 
-      objectReference: {fileID: 114710488286434938, guid: dc0b861acff88194b8c72f5f0dc38cdc,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 215aa314d060f42fe84d47a758252a6f, type: 2}
   m_IsPrefabParent: 0
@@ -1151,6 +1145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pigeon: {fileID: 114426664}
   localPlayer: {fileID: 0}
+  gameStep: 0
 --- !u!4 &821262011
 Transform:
   m_ObjectHideFlags: 0
