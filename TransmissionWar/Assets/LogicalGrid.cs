@@ -87,7 +87,11 @@ public class LogicalGrid : MonoBehaviour
 			return false;
 		}
 		var isFree = tile.IsFree();
-		Debug.LogFormat ("{0}.IsTileFree({1}): {2}", this.name, pos, isFree);
+		string usedBy = "";
+		if (!isFree) {
+			usedBy = string.Format (" {0}[{1}]", tile.OccupiedBy.name, tile.OccupiedBy.Team);
+		}
+		Debug.LogFormat ("{0}.IsTileFree({1}): {2}{3}", this.name, pos, isFree, usedBy);
 		return isFree;
 	}
 
@@ -124,6 +128,7 @@ public class LogicalGrid : MonoBehaviour
 		Debug.LogFormat("HERE:: {0}", pos);
 		tile = this.GetTile(pos);
 		tile.OccupiedBy = soldier;
+		soldier.Position = pos;
 	}
 
 	public void SetUpSoliders(IEnumerable<SoldierController> soldiers){
