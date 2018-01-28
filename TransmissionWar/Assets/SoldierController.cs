@@ -13,8 +13,6 @@ public class SoldierController : MonoBehaviour {
     SelectableUnit selectable;
 	public Vector2 Position;
 
-
-
 	// Use this for initialization
 	void Start () {
         selectable = GetComponent<SelectableUnit>();
@@ -29,10 +27,20 @@ public class SoldierController : MonoBehaviour {
 	}
 
 	public void ExecuteCommand(Direction direction, Vector2 nextPosition){
-		this.Position = nextPosition;
-		MoveableUnit moveableUnit = this.GetComponent<MoveableUnit> ();
-		moveableUnit.playerId = team;
-		moveableUnit.ExecuteCommand (direction);
-		this.GetComponent<SelectableUnit> ().Deselect ();//???
+		// deselects the unit
+		this.GetComponent<SelectableUnit> ().Deselect ();
+
+		// first update the logical state with game manager
+		if (GameManager.Instance.SoldierUpdate(Team, nextPosition)) {
+			MoveableUnit moveableUnit = this.GetComponent<MoveableUnit> ();
+
+			moveableUnit.playerId = team;
+			moveableUnit.ExecuteCommand(direction);
+			GameManager.Instance.GetGrid().RegisterSoldier(this, nextPosition);
+
+			// update succeeded, update the actual game unit; this needs to be done LAST
+			this.Position = nextPosition;
+		} else {
+		}
 	}
 }
