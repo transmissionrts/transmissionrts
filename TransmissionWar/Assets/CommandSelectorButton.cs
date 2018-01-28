@@ -52,7 +52,7 @@ public class CommandSelectorButton : MonoBehaviour {
     }
 
     //When any button is pressed
-    void AnyButtonCommand(Transform arrowToEnable, int direction)
+    void AnyButtonCommand(Transform arrowToEnable, Direction direction)
     {
         Debug.Log(arrowToEnable.name);
 

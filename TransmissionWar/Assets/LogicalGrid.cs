@@ -88,7 +88,7 @@ public class LogicalGrid : MonoBehaviour
 		return tile.IsFree();
 	}
 
-	public bool CanMakeMove (SoldierController soldier, int movementDirection)
+	public bool CanMakeMove (SoldierController soldier, Direction movementDirection)
 	{
 		Vector2 soldierPos = soldier.Position;
 		Vector2 targetPos = soldierPos;

@@ -85,7 +85,7 @@ public class AIOpponent : AbstractPlayer {
 			LogicalGrid grid = this.gameManager.GetGrid ();
 
 			foreach (ScoredSoldier scored in this.aiData.myScoredUnits) {
-				List<int> posibleMoves = new List<int> ();
+				List<Direction> posibleMoves = new List<Direction> ();
 					List<string> posibleMovesStr = new List<string> ();
 					if (grid.CanMakeMove (scored.Soldier, Direction.UP)){
 					posibleMoves.Add (Direction.UP);

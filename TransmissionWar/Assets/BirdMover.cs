@@ -5,7 +5,7 @@ using UnityEngine;
 public class CommandPayload {
 	public Transform Target;
 	public SoldierController Solider;
-	public int Direction;
+	public Direction direction;
 
 }
 

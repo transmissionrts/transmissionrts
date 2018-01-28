@@ -27,8 +27,10 @@ public class SoldierController : MonoBehaviour {
 		this.selectable.Deselect();
 	}
 
-	public void ExecuteCommand(int direction){
-		this.GetComponent<MoveableUnit> ().ExecuteCommand (direction);
+	public void ExecuteCommand(Direction direction){
+		MoveableUnit moveableUnit = this.GetComponent<MoveableUnit> ();
+		moveableUnit.playerId = team;
+		moveableUnit.ExecuteCommand (direction);
 		this.GetComponent<SelectableUnit> ().Deselect ();//???
 	}
 }

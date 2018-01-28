@@ -7,7 +7,7 @@ public class LocalPlayer : AbstractPlayer {
 
 	private SelectableUnit selectedUnit;
 	private Transform pigeon;
-	public int nextCommand = Direction.NONE;
+	public Direction nextCommand = Direction.NONE;
 
 	public CommandSelectorButton commandSelectorButton;
 
@@ -17,11 +17,11 @@ public class LocalPlayer : AbstractPlayer {
 		this.commandSelectorButton = GameObject.FindObjectOfType<CommandSelectorButton> ();
 	}
 
-	public bool IsValidCommand(int direction){
-		return direction >= 0 && direction < 4;
+	public bool IsValidCommand(Direction direction){
+		return direction != Direction.NONE;
 	}
 
-	public void SelectedCommand(int command)
+	public void SelectedCommand(Direction command)
 	{
 		if (!this.IsValidCommand (command))
 			return;

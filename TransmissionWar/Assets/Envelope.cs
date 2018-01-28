@@ -29,10 +29,10 @@ public class Envelope : MonoBehaviour {
 	void deliverMessage() {
 		if (this.payload != null) {
 			if (this.payload.Solider != null) {
-				this.payload.Solider.ExecuteCommand (this.payload.Direction);
+				this.payload.Solider.ExecuteCommand (this.payload.direction);
 			}
 			this.payload = null;
-			GameManager.Instance.PayloadDelivered(this.playerId);
+			//GameManager.Instance.PayloadDelivered(this.playerId);
 		}
 		Destroy (gameObject);
 	}

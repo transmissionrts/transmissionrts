@@ -117,12 +117,12 @@ public class GameManager : MonoBehaviour {
 		return this.players [idx];
 	}
 
-	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
+	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, Direction movementDirection){
 		
 		CommandPayload command = new CommandPayload () {
 			Target = soldier.transform,
 			Solider = soldier,
-			Direction = movementDirection
+			direction = movementDirection
 		};
 		var player = this.GetPlayer (playerId);
 		player.BirdMover.SetCommand (command);
@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour {
 		player.PlayTurn ();
 	}
 
-	public void PayloadDelivered(PlayerId playerId){
+	public void TurnExecuted(PlayerId playerId) {
 		var player = this.GetPlayer (playerId);
 		player.ReadyForNextTurn = true;
 
