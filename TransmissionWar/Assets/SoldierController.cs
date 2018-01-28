@@ -30,17 +30,23 @@ public class SoldierController : MonoBehaviour {
 		// deselects the unit
 		this.GetComponent<SelectableUnit> ().Deselect ();
 
-		// first update the logical state with game manager
-		if (GameManager.Instance.SoldierUpdate(Team, nextPosition)) {
-			MoveableUnit moveableUnit = this.GetComponent<MoveableUnit> ();
+		bool ok = GameManager.Instance.SoldierUpdate(Team, this, nextPosition);
 
+		// first update the logical state with game manager
+		if (ok) {
+			MoveableUnit moveableUnit = this.GetComponent<MoveableUnit> ();
 			moveableUnit.playerId = team;
 			moveableUnit.ExecuteCommand(direction);
 			GameManager.Instance.GetGrid().RegisterSoldier(this, nextPosition);
 
 			// update succeeded, update the actual game unit; this needs to be done LAST
 			this.Position = nextPosition;
-		} else {
 		}
+	}
+
+	public void Kill() {
+        // lost
+        GameManager.Instance.GetGrid().DeregisterSoldier(this);
+        this.gameObject.SetActive(false);
 	}
 }

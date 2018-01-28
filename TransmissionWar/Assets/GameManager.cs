@@ -8,8 +8,13 @@ public enum PlayerId{
 	PlayerB = 1
 }
 
+
 [DefaultExecutionOrder(order: -900)]
 public class GameManager : MonoBehaviour {
+	public enum SoldierMovement {
+		Won,
+		Lost,
+	}
 	public enum GameState {
 		InProgress,
 		TeamAWon,
@@ -79,16 +84,27 @@ public class GameManager : MonoBehaviour {
 		SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
 	}
 
-	public bool SoldierUpdate(PlayerId team, Vector2 soldierPos) {
-		// TODO: fix this
-		return true;
+	public bool SoldierUpdate(PlayerId team, SoldierController soldier, Vector2 nextPosition) {
+		bool soldierOk = true;
 
-		if (System.Math.Abs(soldierPos.y) == gridCreator.gridHeight || soldierPos.y == 0) {
-			if (team == 0) {
-				teamAFinished = true;
+		var soldierPos = soldier.Position;
+		var enemy = this.logicalGrid.EncounterEnemy(team, nextPosition);
+
+		if (enemy != null) {
+			int rnd = Random.Range(0, 10);
+			int winner = rnd % 2;
+			if (PlayerIdToInt(team) == winner) {
+				enemy.Kill();
 			} else {
-				teamBFinished = true;
+				soldier.Kill();
+				soldierOk = false;
 			}
+		}
+
+		if (soldierPos.y == gridCreator.gridHeight && PlayerIdToInt(team) == 0) {
+			teamBFinished = true;
+		} else if (soldierPos.y == 0 && PlayerIdToInt(team) == 1) {
+			teamAFinished = true;
 		}
 
 		// update game state
@@ -103,6 +119,8 @@ public class GameManager : MonoBehaviour {
 		if (currentGameState != GameState.InProgress) {
 			this.Finish();
 		}
+
+		return soldierOk;
 	}
 
 	public int PlayerIdToInt(PlayerId playerId){
@@ -122,7 +140,8 @@ public class GameManager : MonoBehaviour {
 	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, Direction movementDirection){
 		if (soldier.Team == playerId && this.logicalGrid.CanMakeMove(soldier, movementDirection)) {
 			var targetPos = this.logicalGrid.GetTargetPos(soldier.Position, movementDirection);
-			Debug.LogFormat("{0}:: MAKE MOVE {1}, {2}", playerId, soldier.Position, movementDirection);
+
+			Debug.LogFormat("{0}:: MAKE MOVE from {1} to {2}", playerId, soldier.Position, targetPos);
 			CommandPayload command = new CommandPayload () {
 				Target = soldier.transform,
 				Solider = soldier,
@@ -131,7 +150,6 @@ public class GameManager : MonoBehaviour {
 			};
 
 			var player = this.GetPlayer (playerId);
-			// this.logicalGrid.RegisterSoldier(soldier, targetPos);
 			player.BirdMover.SetCommand (command);
 		} else {
 			Debug.LogFormat("CANNOT MAKE MOVE {0}, {1}", soldier.Position, movementDirection);

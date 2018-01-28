@@ -113,13 +113,18 @@ public class LogicalGrid : MonoBehaviour
 		return targetPos;
 	}
 
-	public bool CanMakeMove (SoldierController soldier, Direction movementDirection)
-	{
+	public bool CanMakeMove (SoldierController soldier, Direction movementDirection) {
 		Vector2 soldierPos = soldier.Position;
 		Vector2 targetPos = GetTargetPos(soldierPos, movementDirection);
-		return this.IsTileFree (targetPos);
+		var targetTile = GetTile(targetPos);
+		return targetTile != null && (targetTile.OccupiedBy == null || targetTile.OccupiedBy.Team != soldier.Team);
 	}
 		
+	public void DeregisterSoldier(SoldierController soldier) {
+		Tile tile = this.GetTile(soldier.Position);
+		tile.OccupiedBy = null;
+	}
+
 	public void RegisterSoldier(SoldierController soldier, Vector2 pos) {
 		Debug.LogFormat("{0}[{1}]:: Registered HERE:: {2}", soldier.name, soldier.Team, soldier.Position);
 		Tile fromTile = this.GetTile(soldier.Position);
@@ -127,7 +132,9 @@ public class LogicalGrid : MonoBehaviour
 
 		string fromOccStr = fromTile.IsFree () ? "free" : fromTile.OccupiedBy.name;
 		string toOccStr = toTile.IsFree () ? "free" : toTile.OccupiedBy.name;
+
 		Debug.LogFormat ("RegisterSoldier {0} from {1}[{2}] to {2}[{3}]", soldier.name, soldier.Position, fromOccStr, pos, toOccStr);
+
 		if (fromTile.OccupiedBy == soldier) {
 			fromTile.OccupiedBy = null;
 		}
@@ -169,11 +176,28 @@ public class LogicalGrid : MonoBehaviour
 		};
 	}
 
-	public Vector2? OpponentNearBy(Vector2 currentPos) {
+	public SoldierController OpponentNearBy(PlayerId playerId, Vector2 currentPos) {
 		foreach(var nn in Neighbors(currentPos)) {
-			if (IsValidPos(nn) && !IsTileFree(nn)) {
-				return nn;
+			// if pos not valid or has no soldier
+			if (!IsValidPos(nn) || IsTileFree(nn)) {
+				continue;
 			}
+			Tile tile = GetTile(nn);
+			if (tile.OccupiedBy.Team != playerId) {
+				return tile.OccupiedBy;
+			}
+		}
+		return null;
+	}
+
+	public SoldierController EncounterEnemy(PlayerId playerId, Vector2 pos) {
+		// if pos not valid or has no soldier
+		if (!IsValidPos(pos) || IsTileFree(pos)) {
+			return null;
+		}
+		Tile tile = GetTile(pos);
+		if (tile.OccupiedBy.Team != playerId) {
+			return tile.OccupiedBy;
 		}
 		return null;
 	}

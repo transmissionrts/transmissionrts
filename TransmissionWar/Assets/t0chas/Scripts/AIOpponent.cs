@@ -35,14 +35,15 @@ public class AIOpponent : AbstractPlayer {
 			float minMovesLeft = Mathf.Abs(targetGridRow - scored.Soldier.Position.y);
 			scored.MinMovesToWin = (int)minMovesLeft;
 			scored.LikelyToWin = minMovesLeft / grid.Height;
-			scoredSoldiers.Add (scored);
 
-			Debug.LogFormat (scored.Soldier, "ScoreUnits[{0}]: minMovesLeft: {1}; ", scored.Soldier.name, scored.MinMovesToWin, scored.LikelyToWin);
+			if (scored.Soldier.gameObject.active) {
+				scoredSoldiers.Add (scored);
+				Debug.LogFormat (scored.Soldier, "ScoreUnits[{0}]: minMovesLeft: {1}; ", scored.Soldier.name, scored.MinMovesToWin, scored.LikelyToWin);
+			}
 		}
 
 		//not optimal//
 		scoredSoldiers.Sort((x, y) => x.LikelyToWin.CompareTo(y.LikelyToWin));
-
 		return scoredSoldiers;
 	}
 
