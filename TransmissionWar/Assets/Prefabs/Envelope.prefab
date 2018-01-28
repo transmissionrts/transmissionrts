@@ -127,4 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 0
   catEFX1: {fileID: 8300000, guid: e3e7d11a351194b2c9e19e08ceff037a, type: 3}
-  dogEFX1: {fileID: 8300000, guid: 6a9d43bd77a6946499a2021190fe2fb5, type: 3}
+  catEFX2: {fileID: 8300000, guid: f3d0b1c6f678e4ca6969096d5de0fc05, type: 3}
+  dogEFX1: {fileID: 8300000, guid: ae54e3845cd7942da881fd8742a13818, type: 3}
+  dogEFX2: {fileID: 8300000, guid: 0a3dcd3163e77482a8847973b5bfb936, type: 3}
