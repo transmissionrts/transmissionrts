@@ -14,7 +14,10 @@ public class BirdMover : MonoBehaviour {
 	public float dropAltitude;
 	float descentLength;
 
-	enum FlightPhase {ToTarget, BackHome};
+    bool hasTarget;
+
+
+    enum FlightPhase {ToTarget, BackHome};
 
 	FlightPhase phase = FlightPhase.ToTarget;
 	Vector3 initialPosition;
@@ -24,41 +27,63 @@ public class BirdMover : MonoBehaviour {
 	float lastFlap = 0f;
 	public float cruisingAltitude = 5;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		initialPosition = transform.position;
-		targetPosition = target.position;
-		rb = GetComponent<Rigidbody> ();
+
+        SetTarget(target);
+
+        rb = GetComponent<Rigidbody> ();
 		descentLength = descentRatio * (cruisingAltitude - dropAltitude);
 	}
 
+    public void SetTarget(Transform newTarget) {
+        target = newTarget;
 
-	// Update is called once per frame
-	void FixedUpdate () {
-		Vector3 toTarget = targetPosition - rb.position;
-		FlapIfNeeded (toTarget);
+        if (newTarget != null) {
+            targetPosition = target.position;
+        }
+        else
+        {
+            rb = GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+        }
+    }
 
-		Vector3 horizontalDelta = toTarget;
-		horizontalDelta.y = 0;
-		//Vector3 delta = toTarget.normalized * Time.deltaTime * speed;
-		//rb.MovePosition(rb.position + delta);
 
-		rb.MoveRotation (Quaternion.LookRotation (horizontalDelta));
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (target == null)
+            return;
 
-		switch (phase) {
-		case FlightPhase.ToTarget:
-			if (horizontalDelta.magnitude < 1) {
-				dropPayload ();
-				this.phase = FlightPhase.BackHome;
-				targetPosition = initialPosition;
-			}
-			return;
-		case FlightPhase.BackHome:
-			if (horizontalDelta.magnitude < 1) {
-				GetComponent<BirdMover> ().enabled = false;
-			}
-			break;
-		}
+        Vector3 toTarget = targetPosition - rb.position;
+        FlapIfNeeded(toTarget);
 
+        Vector3 horizontalDelta = toTarget;
+        horizontalDelta.y = 0;
+        //Vector3 delta = toTarget.normalized * Time.deltaTime * speed;
+        //rb.MovePosition(rb.position + delta);
+
+        rb.MoveRotation(Quaternion.LookRotation(horizontalDelta));
+
+        switch (phase)
+        {
+            case FlightPhase.ToTarget:
+                if (horizontalDelta.magnitude < 1)
+                {
+                    dropPayload();
+                    this.phase = FlightPhase.BackHome;
+                    targetPosition = initialPosition;
+                }
+                return;
+            case FlightPhase.BackHome:
+                if (horizontalDelta.magnitude < 1)
+                {
+                    SetTarget(null);
+                }
+                break;
+        }
+    
 	}
 		
 	void FlapIfNeeded(Vector3 toTarget) {
