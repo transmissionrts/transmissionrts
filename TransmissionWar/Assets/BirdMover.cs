@@ -160,6 +160,7 @@ public class BirdMover : MonoBehaviour {
 		Transform envObj = Instantiate(envelope, position: dropPosition, rotation: orientation);
 		Envelope env = envObj.GetComponent<Envelope> ();
 		env.payload = payload;
+		this.payload = null;
 		env.playerId = this.playerId;
 	}
 

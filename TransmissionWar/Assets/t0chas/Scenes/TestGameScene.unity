@@ -1739,10 +1739,6 @@ Prefab:
       propertyPath: birdMover
       value: 
       objectReference: {fileID: 956679583}
-    - target: {fileID: 1899922274453412, guid: 9982013b993e049c280e02ebd892d4e5, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9982013b993e049c280e02ebd892d4e5, type: 2}
   m_IsPrefabParent: 0

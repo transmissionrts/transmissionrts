@@ -67,6 +67,7 @@ public class LocalPlayer : AbstractPlayer {
 			this.selectedUnit.Deselect ();
 		this.commandSelectorButton.UnselectAll ();
 		this.nextCommand = Direction.NONE;
+		base.ResetTurn ();
 	}
 
 

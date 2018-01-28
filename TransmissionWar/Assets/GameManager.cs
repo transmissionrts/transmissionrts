@@ -187,16 +187,17 @@ public class GameManager : MonoBehaviour {
 		foreach (var player in this.players) {
 			if (player == null)
 				continue;
+			Debug.LogFormat (player, "GoToNextTurn: {0}.ReadyForNextTurn = {1}", player.name, player.ReadyForNextTurn);
 			if (!player.ReadyForNextTurn){
 				goToNextTurn = false;
 				break;
 			}
 		}
+		Debug.LogFormat (this, "GoToNextTurn: {0}", goToNextTurn);
 		if(goToNextTurn){
 			foreach (var player in this.players) {
 				if (player == null)
 					continue;
-				player.ReadyForNextTurn = false;
 				player.ResetTurn ();
 				player.PlayTurn ();
 			}

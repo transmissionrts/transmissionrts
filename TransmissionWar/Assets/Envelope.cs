@@ -32,8 +32,8 @@ public class Envelope : MonoBehaviour {
 				this.payload.Solider.ExecuteCommand (this.payload.Direction);
 			}
 			this.payload = null;
+			GameManager.Instance.PayloadDelivered(this.playerId);
 		}
-		GameManager.Instance.PayloadDelivered(this.playerId);
 		Destroy (gameObject);
 	}
 }

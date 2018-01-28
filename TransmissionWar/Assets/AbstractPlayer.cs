@@ -45,7 +45,7 @@ public abstract class AbstractPlayer : MonoBehaviour {
 	}
 
 	protected virtual void Start(){
-		Debug.LogWarningFormat ("{0}.Start()", this.name);
+		Debug.LogWarningFormat (this, "{0}.Start()", this.name);
 		this.gameManager = GameManager.Instance;
 		this.gameManager.RegisterPlayer (this);
 
@@ -54,12 +54,19 @@ public abstract class AbstractPlayer : MonoBehaviour {
 	}
 
 	public virtual void PlayTurn (){
+		Debug.LogFormat (this, "{0}.PlayTurn()", this.name);
+		this.ReadyForNextTurn = false;
 		this.isPlayingTurn = true;
 	}
 
 	public virtual void TurnEnded(){
+		Debug.LogFormat (this, "{0}.TurnEnded()", this.name);
 		this.isPlayingTurn = false;
 	}
 
-	public abstract void ResetTurn ();
+	public virtual void ResetTurn (){
+		this.ReadyForNextTurn = false;
+		this.isPlayingTurn = false;
+		this.birdMover.ResetPayload ();
+	}
 }

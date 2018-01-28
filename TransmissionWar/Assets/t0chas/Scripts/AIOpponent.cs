@@ -129,6 +129,6 @@ public class AIOpponent : AbstractPlayer {
 
 	public override void ResetTurn ()
 	{
-		
+		base.ResetTurn ();
 	}
 }
