@@ -11,8 +11,12 @@ public class CommandSelectorButton : MonoBehaviour {
     GameObject unitSelectorObj;
     UnitSelector unitSelector;
 
+	public LocalPlayer localPlayer;
+
     void Start()
     {
+		this.localPlayer = GameObject.FindObjectOfType<LocalPlayer> ();
+
         unitSelectorObj = GameObject.FindGameObjectWithTag("UnitSelector");
         unitSelector = unitSelectorObj.GetComponent<UnitSelector>();
 
@@ -28,22 +32,16 @@ public class CommandSelectorButton : MonoBehaviour {
         Debug.Log("Up Command Given to Pigeon");
         label.GetComponent<Text>().text = "Choose unit to send command to";
 
-        //MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unitSelector.nextCommand = Direction.UP;
-        //unit.command = Direction.UP;
-        //unit.ExecuteCommand();
+		this.localPlayer.SelectedCommand (Direction.UP);
     }
 
     public void ButtonCommandDown()
     {
         downArrow.gameObject.SetActive(true);
         Debug.Log("Down Command Given to Pigeon");
-        label.GetComponent<Text>().text = "Choose unit to send command to";
+		label.GetComponent<Text> ().text = "Choose unit to send command to";
 
-        //MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unitSelector.nextCommand = Direction.DOWN;
-        //unit.command = Direction.DOWN;
-        //unit.ExecuteCommand();
+		this.localPlayer.SelectedCommand (Direction.DOWN);
     }
 
     public void ButtonCommandLeft()
@@ -52,10 +50,7 @@ public class CommandSelectorButton : MonoBehaviour {
         Debug.Log("Left Command Given to Pigeon");
         label.GetComponent<Text>().text = "Choose unit to send command to";
 
-        // MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unitSelector.nextCommand = Direction.LEFT;
-        //unit.command = Direction.LEFT;
-        //unit.ExecuteCommand();
+		this.localPlayer.SelectedCommand (Direction.LEFT);
     }
 
     public void ButtonCommandRight()
@@ -64,10 +59,7 @@ public class CommandSelectorButton : MonoBehaviour {
         Debug.Log("Right Command Given to Pigeon");
         label.GetComponent<Text>().text = "Choose unit to send command to";
 
-        //MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unitSelector.nextCommand = Direction.RIGHT;
-        //unit.command = Direction.RIGHT;
-        //unit.ExecuteCommand();
+		this.localPlayer.SelectedCommand (Direction.RIGHT);
     }
 
     public void UnselectAll()

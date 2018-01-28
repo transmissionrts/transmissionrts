@@ -67,7 +67,7 @@ public class MoveableUnit : MonoBehaviour {
         }*/
     }
 
-    public void ExecuteCommand() {
+	public void ExecuteCommand(int command) {
 
         switch (command) {
 

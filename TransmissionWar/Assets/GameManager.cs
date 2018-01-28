@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		instance = this;//registering self to static instance
+		this.gridCreator = GameObject.FindObjectOfType<GridCreator>();
 	}
 
     private GameState currentGameState = GameState.InProgress;
@@ -94,11 +95,30 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void IssueCommandTo(PlayerId playerId, Soldier soldier, int movementDirection){
+	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
 		//TODO
 	}
 
 	public void EndTurn(PlayerId playerId){
         // TODO
     }
+
+
+	public AbstractPlayer PlayerA;
+	public AbstractPlayer PlayerB;
+	public void RegisterPlayer(AbstractPlayer player){
+		if (player == null)
+			return;
+		if (player.playerId == PlayerId.PlayerA)
+			this.PlayerA = player;
+		if (player.playerId == PlayerId.PlayerB)
+			this.PlayerB = player;
+	}
+
+	public void PayloadDelivered(){
+		if (this.PlayerA != null)
+			this.PlayerA.ResetTurn ();
+		if (this.PlayerB != null)
+			this.PlayerA.ResetTurn ();
+	}
 }
