@@ -90,40 +90,55 @@ public class AIOpponent : AbstractPlayer {
 			.Do ("SendCommandTo", t => {
 			LogicalGrid grid = this.gameManager.GetGrid ();
 
-			foreach (ScoredSoldier scored in this.aiData.myScoredUnits) {
-					int rnd = Random.RandomRange(0, 10);
-					if(rnd % 2== 0)
-						continue;
 				List<Direction> posibleMoves = new List<Direction> ();
-					List<string> posibleMovesStr = new List<string> ();
-					if (grid.CanMakeMove (scored.Soldier, Direction.UP)){
-						posibleMoves.Add (Direction.UP);
-						posibleMovesStr.Add("Up");
-					}
-					if (grid.CanMakeMove (scored.Soldier, Direction.DOWN)){
-						posibleMoves.Add (Direction.DOWN);
-						posibleMovesStr.Add("Down");
-					}
-					if (grid.CanMakeMove (scored.Soldier, Direction.LEFT)){
-						posibleMoves.Add (Direction.LEFT);
-						posibleMovesStr.Add("Left");
-					}
-					if (grid.CanMakeMove (scored.Soldier, Direction.RIGHT)){
-						posibleMoves.Add (Direction.RIGHT);
-						posibleMovesStr.Add("Right");
-					}
+				SoldierController selectedSoldier = null;
+				int tryCount = 0;
+				while(selectedSoldier == null && tryCount < 25){
+					tryCount++;
+					foreach (ScoredSoldier scored in this.aiData.myScoredUnits) {
 
-					Debug.LogFormat("{0}:: posibleMoves: {1}", scored.Soldier.name,  string.Join(", ", posibleMovesStr.ToArray()));
-				if (posibleMoves.Count == 0) {
-					//Dam!
-					continue;
-				}
+						posibleMoves.Clear();
+						int rnd = Random.Range(0, 10);
+						if(rnd % 2== 0)
+							continue;
+						
+						List<string> posibleMovesStr = new List<string> ();
+						if (grid.CanMakeMove (scored.Soldier, Direction.UP)){
+							posibleMoves.Add (Direction.UP);
+							posibleMovesStr.Add("Up");
+						}
+						if (grid.CanMakeMove (scored.Soldier, Direction.DOWN)){
+							posibleMoves.Add (Direction.DOWN);
+							posibleMovesStr.Add("Down");
+						}
+						if (grid.CanMakeMove (scored.Soldier, Direction.LEFT)){
+							posibleMoves.Add (Direction.LEFT);
+							posibleMovesStr.Add("Left");
+						}
+						if (grid.CanMakeMove (scored.Soldier, Direction.RIGHT)){
+							posibleMoves.Add (Direction.RIGHT);
+							posibleMovesStr.Add("Right");
+						}
 
-				int selectedMove = Random.Range (0, posibleMoves.Count);
-				Debug.LogFormat(this, "{0}.selectedMove: {1}", this.name,  selectedMove);
-				this.gameManager.IssueCommandTo (this.playerId, scored.Soldier, posibleMoves [selectedMove]);
-				return BehaviourTreeStatus.Success;
+						Debug.LogFormat("{0}:: posibleMoves: {1}", scored.Soldier.name,  string.Join(", ", posibleMovesStr.ToArray()));
+						if (posibleMoves.Count == 0) {
+							//Dam!
+							Debug.LogWarningFormat(scored.Soldier, "{0}[{1}] Has no possible moves", scored.Soldier.name, scored.Soldier.Position);
+							continue;
+						}
+						selectedSoldier = scored.Soldier;
+						break;
+					}
+					if(selectedSoldier != null){
+						Debug.LogFormat(selectedSoldier, "{0} SelectedSoldier: {1}; moves: {2}", this.name, selectedSoldier.name, posibleMoves.Count);
+						int selectedMove = Random.Range (0, posibleMoves.Count);
+						Debug.LogFormat(this, "{0}[t:{1}].selected: {2} Move: {3}", this.name, this.turnN, selectedSoldier.name,  selectedMove);
+						this.gameManager.IssueCommandTo (this.playerId, selectedSoldier, posibleMoves [selectedMove]);
+						return BehaviourTreeStatus.Success;
+					}
+					Debug.LogWarningFormat(this, "{0} Cant find soldier with moves", this.name);
 			}
+			Debug.LogWarningFormat(this, "{0} return Failure", this.name);
 			return BehaviourTreeStatus.Failure;
 		})
 			.End ()
