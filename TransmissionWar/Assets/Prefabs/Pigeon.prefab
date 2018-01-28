@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 10
+  speed: 15
   flapForceMax: 30
   flapForce: 10
   flapInterval: 0.5
@@ -135,3 +135,4 @@ MonoBehaviour:
   cruisingAltitude: 14
   noEnvelopeMaterial: {fileID: 2100000, guid: 0a78f4c20e84b49a68eb25bb9dc85919, type: 2}
   envelope: {fileID: 4773169202414176, guid: 437d9013c670142bdb9c47961beab2b8, type: 2}
+  playerId: 0
