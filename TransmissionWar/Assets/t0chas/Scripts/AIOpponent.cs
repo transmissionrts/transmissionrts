@@ -91,31 +91,31 @@ public class AIOpponent : AbstractPlayer {
 				List<Direction> posibleMoves = new List<Direction> ();
 					List<string> posibleMovesStr = new List<string> ();
 					if (grid.CanMakeMove (scored.Soldier, Direction.UP)){
-					posibleMoves.Add (Direction.UP);
+						posibleMoves.Add (Direction.UP);
 						posibleMovesStr.Add("Up");
 					}
 					if (grid.CanMakeMove (scored.Soldier, Direction.DOWN)){
-					posibleMoves.Add (Direction.DOWN);
+						posibleMoves.Add (Direction.DOWN);
 						posibleMovesStr.Add("Down");
 					}
 					if (grid.CanMakeMove (scored.Soldier, Direction.LEFT)){
-					posibleMoves.Add (Direction.LEFT);
+						posibleMoves.Add (Direction.LEFT);
 						posibleMovesStr.Add("Left");
 					}
 					if (grid.CanMakeMove (scored.Soldier, Direction.RIGHT)){
-					posibleMoves.Add (Direction.RIGHT);
+						posibleMoves.Add (Direction.RIGHT);
 						posibleMovesStr.Add("Right");
 					}
 
-					Debug.LogFormat(this, "{0}.posibleMoves: {1}", this.name,  string.Join(", ", posibleMovesStr.ToArray()));
+					Debug.LogFormat("{0}:: posibleMoves: {1}", scored.Soldier.name,  string.Join(", ", posibleMovesStr.ToArray()));
 				if (posibleMoves.Count == 0) {
 					//Dam!
 					continue;
 				}
 
-				int selectedMoveIdx = Random.Range (0, posibleMoves.Count);
-					Debug.LogFormat(this, "{0}.selectedMove: {1}", this.name,  posibleMoves [selectedMoveIdx]);
-				this.gameManager.IssueCommandTo (this.playerId, scored.Soldier, posibleMoves [selectedMoveIdx]);
+				int selectedMove = Random.Range (0, posibleMoves.Count);
+				Debug.LogFormat(this, "{0}.selectedMove: {1}", this.name,  selectedMove);
+				this.gameManager.IssueCommandTo (this.playerId, scored.Soldier, posibleMoves [selectedMove]);
 				return BehaviourTreeStatus.Success;
 			}
 			return BehaviourTreeStatus.Failure;

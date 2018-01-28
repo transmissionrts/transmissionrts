@@ -46,11 +46,13 @@ public class GridCreator : MonoBehaviour
             soldier.name = string.Format("{0}_{1:00}", soldierPrefab[team].name, i);
             container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
-            logicalGrid.RegisterSoldier(soldier.GetComponent<SoldierController>(), new Vector2(startX + i, startY));
 
             controller.Team = (PlayerId) team;
             controller.Position = new Vector2(startX + i, startY);
 			Debug.LogFormat (controller, "SpawnSoldiers {0}[{1}] @ {2}", controller.name, controller.Team, controller.Position);
+
+            // register soldier last after proper state
+            logicalGrid.RegisterSoldier(soldier.GetComponent<SoldierController>(), new Vector2(startX + i, startY));
         }
 
         Debug.Log(string.Format("Container LENGTH:: {0}", container.Count));
