@@ -36,6 +36,8 @@ public class AIOpponent : AbstractPlayer {
 			scored.MinMovesToWin = (int)minMovesLeft;
 			scored.LikelyToWin = minMovesLeft / grid.Height;
 			scoredSoldiers.Add (scored);
+
+			Debug.LogFormat (scored.Soldier, "ScoreUnits[{0}]: minMovesLeft: {1}; ", scored.Soldier.name, scored.MinMovesToWin, scored.LikelyToWin);
 		}
 
 		//not optimal//
@@ -84,22 +86,32 @@ public class AIOpponent : AbstractPlayer {
 
 			foreach (ScoredSoldier scored in this.aiData.myScoredUnits) {
 				List<int> posibleMoves = new List<int> ();
-				if (grid.CanMakeMove (scored.Soldier, Direction.UP))
+					List<string> posibleMovesStr = new List<string> ();
+					if (grid.CanMakeMove (scored.Soldier, Direction.UP)){
 					posibleMoves.Add (Direction.UP);
-				if (grid.CanMakeMove (scored.Soldier, Direction.DOWN))
+						posibleMovesStr.Add("Up");
+					}
+					if (grid.CanMakeMove (scored.Soldier, Direction.DOWN)){
 					posibleMoves.Add (Direction.DOWN);
-				if (grid.CanMakeMove (scored.Soldier, Direction.LEFT))
+						posibleMovesStr.Add("Down");
+					}
+					if (grid.CanMakeMove (scored.Soldier, Direction.LEFT)){
 					posibleMoves.Add (Direction.LEFT);
-				if (grid.CanMakeMove (scored.Soldier, Direction.RIGHT))
+						posibleMovesStr.Add("Left");
+					}
+					if (grid.CanMakeMove (scored.Soldier, Direction.RIGHT)){
 					posibleMoves.Add (Direction.RIGHT);
+						posibleMovesStr.Add("Right");
+					}
 
+					Debug.LogFormat(this, "{0}.posibleMoves: {1}", this.name,  string.Join(", ", posibleMovesStr.ToArray()));
 				if (posibleMoves.Count == 0) {
 					//Dam!
 					continue;
 				}
 
-				int selectedMove = Random.Range (0, posibleMoves.Count - 1);
-
+				int selectedMove = Random.Range (0, posibleMoves.Count);
+					Debug.LogFormat(this, "{0}.selectedMove: {1}", this.name,  selectedMove);
 				this.gameManager.IssueCommandTo (this.playerId, scored.Soldier, posibleMoves [selectedMove]);
 				return BehaviourTreeStatus.Success;
 			}
