@@ -50,6 +50,7 @@ public class GridCreator : MonoBehaviour
 
             controller.Team = (PlayerId) team;
             controller.Position = new Vector2(startX + i, startY);
+			Debug.LogFormat (controller, "SpawnSoldiers {0}[{1}] @ {2}", controller.name, controller.Team, controller.Position);
         }
 
         Debug.Log(string.Format("Container LENGTH:: {0}", container.Count));

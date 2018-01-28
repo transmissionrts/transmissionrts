@@ -122,14 +122,19 @@ public class LogicalGrid : MonoBehaviour
 		
 	public void RegisterSoldier(SoldierController soldier, Vector2 pos) {
 		Debug.LogFormat("Deregistering:: {0}", soldier.Position);
-		Tile tile = this.GetTile(soldier.Position);
-		if (tile.OccupiedBy == soldier) {
-			tile.OccupiedBy = null;
+		Tile fromTile = this.GetTile(soldier.Position);
+		Tile toTile = this.GetTile(pos);
+
+		string fromOccStr = fromTile.IsFree () ? "free" : fromTile.OccupiedBy.name;
+		string toOccStr = toTile.IsFree () ? "free" : toTile.OccupiedBy.name;
+		Debug.LogFormat ("RegisterSoldier {0} from {1}[{2}] to {2}[{3}]", soldier.name, soldier.Position, fromOccStr, pos, toOccStr);
+		if (fromTile.OccupiedBy == soldier) {
+			fromTile.OccupiedBy = null;
 		}
 
 		Debug.LogFormat("Registered HERE:: {0}", pos);
-		tile = this.GetTile(pos);
-		tile.OccupiedBy = soldier;
+		//toTile = this.GetTile(pos);
+		toTile.OccupiedBy = soldier;
 		soldier.Position = pos;
 	}
 
