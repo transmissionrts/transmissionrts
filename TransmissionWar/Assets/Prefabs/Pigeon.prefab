@@ -132,4 +132,7 @@ MonoBehaviour:
   flapInterval: 0.5
   descentRatio: 2.5
   dropAltitude: 0
+  commandSelectorButtonTransform: {fileID: 0}
   cruisingAltitude: 14
+  noEnvelopeMaterial: {fileID: 2100000, guid: 0a78f4c20e84b49a68eb25bb9dc85919, type: 2}
+  envelope: {fileID: 4773169202414176, guid: 437d9013c670142bdb9c47961beab2b8, type: 2}
