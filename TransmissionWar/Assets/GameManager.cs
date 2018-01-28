@@ -137,6 +137,23 @@ public class GameManager : MonoBehaviour {
 		return this.players [idx];
 	}
 
+	public SoldierController getSoilderByID(string id ) {
+		SoldierController s = PlayerB.getSoilderByID(id);
+		if(s != null) {
+			int pos = PlayerB.getSoildersPos(id);
+			s = PlayerA.getSoilderByPos(pos);
+			return s;
+		}
+
+		SoldierController s2 = PlayerA.getSoilderByID(id);
+		if(s2 != null) {
+			int pos = PlayerA.getSoildersPos(id);
+			s2 = PlayerB.getSoilderByPos(pos);
+			return s2;
+		}
+		return null;
+	}
+
 	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, Direction movementDirection){
 		if (soldier.Team == playerId && this.logicalGrid.CanMakeMove(soldier, movementDirection)) {
 			var targetPos = this.logicalGrid.GetTargetPos(soldier.Position, movementDirection);
