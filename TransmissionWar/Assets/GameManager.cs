@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+	public int MyTeam;
+
     // Use this for initialization
     void Start () {
 		// TODO: initialize soldier & code
