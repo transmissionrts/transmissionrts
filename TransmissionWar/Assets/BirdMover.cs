@@ -48,6 +48,9 @@ public class BirdMover : MonoBehaviour {
 
         rb = GetComponent<Rigidbody> ();
 		descentLength = descentRatio * (cruisingAltitude - dropAltitude);
+	}
+
+	void Start() {
 		withEnvelopeMaterial = GetComponent<MeshRenderer> ().material;
 	}
 
@@ -61,7 +64,9 @@ public class BirdMover : MonoBehaviour {
         if (newTarget != null) {
             targetPosition = target.position;
             phase = FlightPhase.ToTarget;
-			GetComponent<MeshRenderer>().materials = new Material[]{withEnvelopeMaterial};
+			if (withEnvelopeMaterial != null) {
+				GetComponent<MeshRenderer>().materials = new Material[]{withEnvelopeMaterial};
+			}
         }
         else
         {
@@ -152,7 +157,7 @@ public class BirdMover : MonoBehaviour {
 				}
 				this.payload = null;
 			}
-			GameManager.Instance.PayloadDelivered ();
+			GameManager.Instance.PayloadDelivered();
 		}
 		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
 
