@@ -16,6 +16,8 @@ public class GridCreator : MonoBehaviour {
 	public List<Transform> teamB;
     Transform kingB;
 
+    LogicalGrid logicalGrid;
+
     void SpawnSoldiers(List<Transform> container, int team, int startX, int startY) {
 		container.Clear ();
 
@@ -36,6 +38,11 @@ public class GridCreator : MonoBehaviour {
 			soldier.name = string.Format("{0}_{1:00}", soldierPrefab[team].name, i); 
             container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
+
+            logicalGrid.RegisterSoldier(soldier.GetComponent<SoldierController>(), new Vector2(startX + i, startY));
+
+            controller.Team = (PlayerId) team;
+            controller.Position = new Vector2(startX + i, startY);
         }
 
         Debug.Log(string.Format("Container LENGTH:: {0}", container.Count));
@@ -65,20 +72,20 @@ public class GridCreator : MonoBehaviour {
             }
         }
 
-		LogicalGrid grid = this.gameObject.AddComponent<LogicalGrid> ();
-		grid.Setup (this.gridWidth, this.gridHeight);
+		logicalGrid = this.gameObject.AddComponent<LogicalGrid> ();
+		logicalGrid.Setup (this.gridWidth, this.gridHeight);
 
         // 0 for team A
 		this.teamA = new List<Transform>();
         SpawnSoldiers(teamA, 0, 0, 0);
         kingA = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, -1), Quaternion.identity);
-		grid.KingATransform = kingA;
+		logicalGrid.KingATransform = kingA;
 
         // 1 for team B
 		this.teamB = new List<Transform>();
         SpawnSoldiers(teamB, 1, 0, gridHeight -1 ); //Mathf.RoundToInt(gridWidth),
         kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight), Quaternion.identity);
-		grid.KingBTransform = kingB;
+		logicalGrid.KingBTransform = kingB;
     }
     
     public Vector3 GridPosToWorldPos(int x, int y) {

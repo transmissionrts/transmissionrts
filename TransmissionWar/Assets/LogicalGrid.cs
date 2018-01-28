@@ -15,8 +15,7 @@ public class LogicalGrid : MonoBehaviour
 		[SerializeField]
 		public SoldierController OccupiedBy;
 
-		public Tile (Vector2 pos)
-		{
+		public Tile (Vector2 pos) {
 			this.position = pos;
 		}
 
@@ -88,10 +87,7 @@ public class LogicalGrid : MonoBehaviour
 		return tile.IsFree();
 	}
 
-	public bool CanMakeMove (SoldierController soldier, int movementDirection)
-	{
-		Vector2 soldierPos = soldier.Position;
-		Vector2 targetPos = soldierPos;
+	public Vector2 GetTargetPos(Vector2 targetPos, int movementDirection) {
 		switch (movementDirection) {
 		case Direction.UP:
 			targetPos.y += 1;
@@ -106,6 +102,23 @@ public class LogicalGrid : MonoBehaviour
 			targetPos.x += 1;
 			break;
 		}
+		return targetPos;
+	}
+
+	public bool CanMakeMove (SoldierController soldier, int movementDirection)
+	{
+		Vector2 soldierPos = soldier.Position;
+		Vector2 targetPos = GetTargetPos(soldierPos, movementDirection);
 		return this.IsTileFree (targetPos);
+	}
+
+	public void RegisterSoldier(SoldierController soldier, Vector2 pos) {
+		Debug.LogFormat("THERE:: {0}", soldier.Position);
+		Tile tile = this.GetTile(soldier.Position);
+		tile.OccupiedBy = null;
+
+		Debug.LogFormat("HERE:: {0}", pos);
+		tile = this.GetTile(pos);
+		tile.OccupiedBy = soldier;
 	}
 }

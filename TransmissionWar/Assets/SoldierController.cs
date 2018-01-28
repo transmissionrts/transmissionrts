@@ -27,7 +27,8 @@ public class SoldierController : MonoBehaviour {
 		this.selectable.Deselect();
 	}
 
-	public void ExecuteCommand(int direction){
+	public void ExecuteCommand(int direction, Vector2 nextPosition){
+		this.Position = nextPosition;
 		this.GetComponent<MoveableUnit> ().ExecuteCommand (direction);
 		this.GetComponent<SelectableUnit> ().Deselect ();//???
 	}
