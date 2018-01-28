@@ -6,12 +6,13 @@ public class MoveableUnit : MonoBehaviour {
 
     Transform upArrow, downArrow, leftArrow, rightArrow, upArrowSelected, downArrowSelected, leftArrowSelected, rightArrowSelected;
 
-    public int command;
-
     float tileWidth, tileHeight;
 
     public Transform grid;
+	public PlayerId playerId;
     GridCreator gridCreator;
+
+	public static float speed = 9.0f;
     // Use this for initialization
     void Start () {
 
@@ -66,33 +67,44 @@ public class MoveableUnit : MonoBehaviour {
             rightArrowSelected.gameObject.SetActive(true);
         }*/
     }
+		
+	private Vector3 target;
+	private bool isMoving = false;
+	public void ExecuteCommand(Direction command) {
+		isMoving = true;
+		switch (command) {
+		case Direction.UP:
+			target = transform.position + new Vector3(0, 0, tileHeight);
+			break;
 
-	public void ExecuteCommand(int command) {
+		case Direction.DOWN:
+			target = transform.position + new Vector3(0, 0, -tileHeight);
+			break;
 
-        switch (command) {
+		case Direction.LEFT:
+			target = transform.position + new Vector3(-tileWidth, 0, 0);
+			break;
 
-            case Direction.UP:
-                transform.position += new Vector3(0, 0, tileHeight);
-                break;
+		case Direction.RIGHT:
+			target = transform.position + new Vector3(tileWidth, 0, 0);
+			break;
 
-            case Direction.DOWN:
-                transform.position += new Vector3(0, 0, -tileHeight);
-                break;
+		case Direction.NONE:
+			break;
+		}
+	}
 
-            case Direction.LEFT:
-                transform.position += new Vector3(-tileWidth, 0, 0);
-                break;
+	public void Update() {
+		if (!isMoving)
+			return;
+		transform.position = Vector3.MoveTowards (
+			transform.position, target, Time.deltaTime * speed
+		);
 
-            case Direction.RIGHT:
-                transform.position += new Vector3(tileWidth, 0, 0);
-                break;
-                
-            case Direction.NONE:
-
-                break;
-        }
-
-
+		if (transform.position == target) {
+			isMoving = false;
+			GameManager.Instance.TurnExecuted (this.playerId);
+		}
     }
     
 }
