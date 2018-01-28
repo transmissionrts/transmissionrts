@@ -59,6 +59,6 @@ MonoBehaviour:
     type: 2}
   gridWidth: 10
   gridHeight: 10
-  soldierCount: 0
+  soldierCount: 10
   tileWidth: 10
   tileHeight: 10
