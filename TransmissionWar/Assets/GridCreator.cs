@@ -23,6 +23,8 @@ public class GridCreator : MonoBehaviour
 
     LogicalGrid logicalGrid;
 
+	public Vector2 cameraOffset;
+
     void SpawnSoldiers(List<Transform> container, int team, int startX, int startY) {
 		container.Clear ();
 
@@ -63,7 +65,7 @@ public class GridCreator : MonoBehaviour
     {
         soldierCount = gridWidth;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        mainCamera.position = new Vector3(gridWidth / 2 * tileWidth, Mathf.Max(gridWidth, gridHeight) * 10, gridWidth / 2 * tileWidth);
+        mainCamera.position = new Vector3(gridWidth / 2 * tileWidth + cameraOffset.x, Mathf.Max(gridWidth, gridHeight) * 10 + cameraOffset.y, gridWidth / 2 * tileWidth);
 
         float xoffset = 0, yoffset = 0;
 
