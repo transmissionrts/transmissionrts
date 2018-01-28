@@ -70,4 +70,14 @@ public class CommandSelectorButton : MonoBehaviour {
         //unit.ExecuteCommand();
     }
 
+    public void UnselectAll()
+    {
+        rightArrow.gameObject.SetActive(false);
+        leftArrow.gameObject.SetActive(false);
+        upArrow.gameObject.SetActive(false);
+        downArrow.gameObject.SetActive(false);
+
+        label.GetComponent<Text>().text = "Pigeons delivered messages...";
+    }
+
 }

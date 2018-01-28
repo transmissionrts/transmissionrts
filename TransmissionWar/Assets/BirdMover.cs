@@ -14,8 +14,10 @@ public class BirdMover : MonoBehaviour {
 	public float dropAltitude;
 	float descentLength;
 
-    bool hasTarget;
 
+    bool hasTarget, intercepted;
+
+    public Transform commandSelectorButtonTransform;
 
     enum FlightPhase {ToTarget, BackHome};
 
@@ -41,6 +43,7 @@ public class BirdMover : MonoBehaviour {
 
         if (newTarget != null) {
             targetPosition = target.position;
+            phase = FlightPhase.ToTarget;
         }
         else
         {
@@ -122,5 +125,22 @@ public class BirdMover : MonoBehaviour {
 
 	void dropPayload () {
 		print ("reached target, delivering payload");
+        if (!intercepted) {
+            GameObject unitSelectorObj;
+            UnitSelector unitSelector;
+            
+            unitSelectorObj = GameObject.FindGameObjectWithTag("UnitSelector");
+            unitSelector = unitSelectorObj.GetComponent<UnitSelector>();
+
+            MoveableUnit moveableUnit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
+            SelectableUnit selectableUnit = unitSelector.selectedUnit.GetComponent<SelectableUnit>();
+
+            selectableUnit.Deselect();
+
+            moveableUnit.ExecuteCommand();
+
+            CommandSelectorButton commandSelectorButton = commandSelectorButtonTransform.GetComponent<CommandSelectorButton>();
+            commandSelectorButton.UnselectAll();
+            }
 	}
 }
