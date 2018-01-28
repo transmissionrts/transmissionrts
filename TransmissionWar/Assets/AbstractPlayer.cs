@@ -9,6 +9,7 @@ public abstract class AbstractPlayer : MonoBehaviour {
 	protected GameManager gameManager;
 
 	protected virtual void Start(){
-		this.gameManager = this.gameManager;
+		Debug.LogWarningFormat ("{0}.Start()", this.name);
+		this.gameManager = GameManager.Instance;
 	}
 }

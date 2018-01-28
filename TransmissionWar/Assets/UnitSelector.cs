@@ -6,13 +6,18 @@ public class UnitSelector : MonoBehaviour {
 
     Camera cam;
 
-    public Transform selectedUnit, pigeon;
+    public Transform pigeon;
 
     public int nextCommand;
 
+	public LocalPlayer localPlayer;
+
 	// Use this for initialization
 	void Start () {
+		this.localPlayer = GameObject.FindObjectOfType<LocalPlayer> ();
+
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
 	}
 	
 	// Update is called once per frame
@@ -30,12 +35,14 @@ public class UnitSelector : MonoBehaviour {
                 Debug.Log("hit");
                     SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
                     su.Select();
-                    selectedUnit = hitTransform;
+				this.localPlayer.SelectedUnit (su);
 
-                    MoveableUnit unit = selectedUnit.GetComponent<MoveableUnit>();
+				//????
+                    MoveableUnit unit = su.GetComponent<MoveableUnit>();
                     unit.command = nextCommand;
 
-                    pigeon.GetComponent<BirdMover>().SetTarget(selectedUnit);
+				pigeon.GetComponent<BirdMover>().SetTarget(su.transform);
+				//????
             }
         }
     }
