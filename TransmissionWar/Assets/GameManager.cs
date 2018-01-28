@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour {
 		SoldierController s = PlayerB.getSoilderByID(id);
 		if(s != null) {
 			int pos = PlayerB.getSoildersPos(id);
+			pos = 4 - pos;
 			s = PlayerA.getSoilderByPos(pos);
 			return s;
 		}
@@ -148,6 +149,7 @@ public class GameManager : MonoBehaviour {
 		SoldierController s2 = PlayerA.getSoilderByID(id);
 		if(s2 != null) {
 			int pos = PlayerA.getSoildersPos(id);
+			pos = 4 - pos;
 			s2 = PlayerB.getSoilderByPos(pos);
 			return s2;
 		}
