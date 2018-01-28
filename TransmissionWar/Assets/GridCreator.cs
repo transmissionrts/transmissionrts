@@ -21,9 +21,16 @@ public class GridCreator : MonoBehaviour
 
     public Transform dogKingPrefab, catKingPrefab;
 
+<<<<<<< HEAD
     void SpawnSoldiers(List<Transform> container, int team, int startX, int startY)
     {
         container.Clear();
+=======
+    LogicalGrid logicalGrid;
+
+    void SpawnSoldiers(List<Transform> container, int team, int startX, int startY) {
+		container.Clear ();
+>>>>>>> origin/master
 
         Quaternion orient;
         if (team == 0)
@@ -45,6 +52,11 @@ public class GridCreator : MonoBehaviour
             soldier.name = string.Format("{0}_{1:00}", soldierPrefab[team].name, i);
             container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
+
+            logicalGrid.RegisterSoldier(soldier.GetComponent<SoldierController>(), new Vector2(startX + i, startY));
+
+            controller.Team = (PlayerId) team;
+            controller.Position = new Vector2(startX + i, startY);
         }
 
         Debug.Log(string.Format("Container LENGTH:: {0}", container.Count));
@@ -81,12 +93,18 @@ public class GridCreator : MonoBehaviour
             }
         }
 
+<<<<<<< HEAD
         LogicalGrid grid = this.gameObject.AddComponent<LogicalGrid>();
         grid.Setup(this.gridWidth, this.gridHeight);
+=======
+		logicalGrid = this.gameObject.AddComponent<LogicalGrid> ();
+		logicalGrid.Setup (this.gridWidth, this.gridHeight);
+>>>>>>> origin/master
 
         // 0 for team A
         this.teamA = new List<Transform>();
         SpawnSoldiers(teamA, 0, 0, 0);
+<<<<<<< HEAD
         catKing = Instantiate(catKingPrefab, GridPosToWorldPos(-1, 0), Quaternion.Euler(0, 180, 0));
         grid.KingATransform = catKing;
 
@@ -95,6 +113,16 @@ public class GridCreator : MonoBehaviour
         SpawnSoldiers(teamB, 1, 0, gridHeight - 1); //Mathf.RoundToInt(gridWidth),
         dogKing = Instantiate(dogKingPrefab, GridPosToWorldPos(-1, gridHeight-1), Quaternion.Euler(0,180,0));
         grid.KingBTransform = dogKing;
+=======
+        kingA = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, -1), Quaternion.identity);
+		logicalGrid.KingATransform = kingA;
+
+        // 1 for team B
+		this.teamB = new List<Transform>();
+        SpawnSoldiers(teamB, 1, 0, gridHeight -1 ); //Mathf.RoundToInt(gridWidth),
+        kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight), Quaternion.identity);
+		logicalGrid.KingBTransform = kingB;
+>>>>>>> origin/master
     }
 
     public Vector3 GridPosToWorldPos(int x, int y)
