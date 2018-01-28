@@ -28,6 +28,11 @@ public class BirdMover : MonoBehaviour {
 	Animator anim;
 	float lastFlap = 0f;
 	public float cruisingAltitude = 5;
+
+	Material withEnvelopeMaterial;
+	public Material noEnvelopeMaterial;
+	public Transform envelope;
+
 	// Use this for initialization
 	void Awake () {
 		initialPosition = transform.position;
@@ -36,6 +41,7 @@ public class BirdMover : MonoBehaviour {
 
         rb = GetComponent<Rigidbody> ();
 		descentLength = descentRatio * (cruisingAltitude - dropAltitude);
+		withEnvelopeMaterial = GetComponent<MeshRenderer> ().material;
 	}
 
     public void SetTarget(Transform newTarget) {
@@ -44,6 +50,7 @@ public class BirdMover : MonoBehaviour {
         if (newTarget != null) {
             targetPosition = target.position;
             phase = FlightPhase.ToTarget;
+			GetComponent<MeshRenderer>().materials = new Material[]{withEnvelopeMaterial};
         }
         else
         {
@@ -142,5 +149,9 @@ public class BirdMover : MonoBehaviour {
             CommandSelectorButton commandSelectorButton = commandSelectorButtonTransform.GetComponent<CommandSelectorButton>();
             commandSelectorButton.UnselectAll();
             }
+		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
+
+		Quaternion orientation = Quaternion.Euler(0, 0, 0);
+		Instantiate(envelope, position: rb.position, rotation: orientation);
 	}
 }
