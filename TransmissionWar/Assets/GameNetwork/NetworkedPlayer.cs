@@ -27,6 +27,7 @@ public class NetworkedPlayer : AbstractPlayer {
 //		int selectedMoveIdx = Random.Range (0, posibleMoves.Count);
 //		Debug.LogFormat(this, "{0}.selectedMove: {1}", this.name,  posibleMoves [selectedMoveIdx]);
 //		this.gameManager.IssueCommandTo (this.playerId, scored.Soldier, posibleMoves [selectedMoveIdx]);
+//		this.gameManager.IssueCommandTo (this.playerId, scored.Soldier, posibleMoves [selectedMoveIdx]);
 	}
 
 	public override void TurnEnded ()

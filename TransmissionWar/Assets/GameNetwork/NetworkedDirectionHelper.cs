@@ -19,5 +19,7 @@ public class NetworkedDirectionHelper {
 		case Direction.RIGHT:
 			return Direction.LEFT;
 		}
+		return Direction.NONE;
 	}
+
 }
