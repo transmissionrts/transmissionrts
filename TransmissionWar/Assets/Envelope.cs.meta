@@ -1,11 +1,13 @@
 fileFormatVersion: 2
 guid: b1abf6ce1c44f46d08b86d1b7df235a5
-timeCreated: 1517112787
+timeCreated: 1517175540
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - catEFX1: {fileID: 8300000, guid: e3e7d11a351194b2c9e19e08ceff037a, type: 3}
+  - dogEFX1: {fileID: 8300000, guid: 0a3dcd3163e77482a8847973b5bfb936, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -8,6 +8,9 @@ public class Envelope : MonoBehaviour {
 
 	public PlayerId playerId;
 
+	public AudioClip catEFX1;
+	public AudioClip dogEFX1;
+
 	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
@@ -29,6 +32,11 @@ public class Envelope : MonoBehaviour {
 	void deliverMessage() {
 		if (this.payload != null) {
 			if (this.payload.Solider != null) {
+				if (this.payload.Solider.Team == PlayerId.PlayerA) {
+					SoundManager.instance.PlaySingle (catEFX1);// Add efx
+				} else {
+					SoundManager.instance.PlaySingle (dogEFX1);
+				}
 				this.payload.Solider.ExecuteCommand (this.payload.direction, this.payload.FinalPosition);
 			}
 			this.payload = null;
