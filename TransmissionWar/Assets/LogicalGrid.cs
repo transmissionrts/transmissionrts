@@ -19,7 +19,7 @@ public class LogicalGrid : MonoBehaviour
 			this.position = pos;
 		}
 
-		public bool IsFree(){
+		public bool IsFree() {
 			return this.OccupiedBy == null;
 		}
 	}
@@ -121,11 +121,13 @@ public class LogicalGrid : MonoBehaviour
 	}
 		
 	public void RegisterSoldier(SoldierController soldier, Vector2 pos) {
-		Debug.LogFormat("THERE:: {0}", soldier.Position);
+		Debug.LogFormat("Deregistering:: {0}", soldier.Position);
 		Tile tile = this.GetTile(soldier.Position);
-		tile.OccupiedBy = null;
+		if (tile.OccupiedBy == soldier) {
+			tile.OccupiedBy = null;
+		}
 
-		Debug.LogFormat("HERE:: {0}", pos);
+		Debug.LogFormat("Registered HERE:: {0}", pos);
 		tile = this.GetTile(pos);
 		tile.OccupiedBy = soldier;
 		soldier.Position = pos;
