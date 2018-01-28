@@ -54,16 +54,19 @@ public class CommandSelectorButton : MonoBehaviour {
     //When any button is pressed
     void AnyButtonCommand(Transform arrowToEnable, int direction)
     {
+        Debug.Log(arrowToEnable.name);
+
         UnselectAll();
+
         if (this.localPlayer.nextCommand == direction)
         {
             this.localPlayer.nextCommand = Direction.NONE;
         }
         else {
             this.localPlayer.SelectedCommand(direction);
-            arrowToEnable.gameObject.SetActive(true);
         }
-        
+        arrowToEnable.gameObject.SetActive(true);
+
         unitSelector.gameStep = GameState.SELECT_RECIPIENT;
     }
 
