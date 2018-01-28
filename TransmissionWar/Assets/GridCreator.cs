@@ -28,7 +28,7 @@ public class GridCreator : MonoBehaviour {
             Transform soldier = Instantiate(soldierPrefab, position: GridPosToWorldPos(startX + i, startY), rotation: orient);
 			container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
-            controller.SetTeam(team);
+            controller.Team = team;
         }
 
         Debug.Log(string.Format("Container LENGTH:: {0}", container.Count));
