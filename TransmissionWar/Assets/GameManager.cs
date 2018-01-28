@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void IssueCommandTo(PlayerId playerId, Soldier soldier, int movementDirection){
+	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
 		//TODO
 	}
 

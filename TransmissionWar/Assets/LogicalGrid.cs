@@ -13,7 +13,7 @@ public class LogicalGrid : MonoBehaviour
 		public Vector2 Position { get { return this.position; } }
 
 		[SerializeField]
-		public Soldier OccupiedBy;
+		public SoldierController OccupiedBy;
 
 		public Tile (Vector2 pos)
 		{
@@ -85,7 +85,7 @@ public class LogicalGrid : MonoBehaviour
 		return tile.IsFree();
 	}
 
-	public bool CanMakeMove (Soldier soldier, int movementDirection)
+	public bool CanMakeMove (SoldierController soldier, int movementDirection)
 	{
 		Vector2 soldierPos = soldier.Position;
 		Vector2 targetPos = soldierPos;

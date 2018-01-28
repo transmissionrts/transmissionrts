@@ -6,6 +6,7 @@ public class SoldierController : MonoBehaviour {
 
 	int team;
     SelectableUnit selectable;
+	public Vector2 Position;
 
 	// Use this for initialization
 	void Start () {
