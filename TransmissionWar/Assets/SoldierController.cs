@@ -5,6 +5,7 @@ using UnityEngine;
 [DefaultExecutionOrder(order: 100)]
 public class SoldierController : MonoBehaviour {
 	PlayerId team;
+	public string id;
 	public PlayerId Team {
 		get {return team;}
 		set {team = value;}
@@ -16,7 +17,7 @@ public class SoldierController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         selectable = GetComponent<SelectableUnit>();
-
+	
     }
 		
 	public void Select() {

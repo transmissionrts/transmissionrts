@@ -14,3 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/gameOver.unity
     guid: cc00cf8745afb40df861e45c4582f9a9
+  - enabled: 1
+    path: Assets/GameNetwork/_Offline.unity
+    guid: 58b9f19fbffb74ae7861369f4da924c0
+  - enabled: 1
+    path: Assets/gameScene 1 Networked.unity
+    guid: 2f6d8e78cb97b44b7974bb104541bd14
+  - enabled: 1
+    path: Assets/GameNetwork/_NetworkingTest.unity
+    guid: ba21d6ee7eddf45dea65f7a6504b3dd2
+  - enabled: 1
+    path: Assets/GameNetwork/NetworkOpponentSceneTest.unity
+    guid: e50757a3092664d70818a6f0cd87f3e9

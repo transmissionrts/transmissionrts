@@ -11,10 +11,16 @@ public class LocalPlayer : AbstractPlayer {
 
 	public CommandSelectorButton commandSelectorButton;
 
+	[SerializeField]
+	private bool isNetworkedScene;
+	private NetworkedMessanger messanger;
+
 	protected override void Start ()
 	{
 		base.Start ();
 		this.commandSelectorButton = GameObject.FindObjectOfType<CommandSelectorButton> ();
+		if (this.isNetworkedScene)
+			messanger = NetworkedMessanger.Instance;
 	}
 
 	public bool IsValidCommand(Direction direction){
@@ -48,6 +54,8 @@ public class LocalPlayer : AbstractPlayer {
 
 
 			this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
+			if (this.isNetworkedScene && messanger != null)
+				messanger.SendMessage (this.playerId.ToString () + "-" + soldier.id + "-" + this.nextCommand.ToString ());
 			this.gameManager.EndTurn (this.playerId);
 		}
 	}

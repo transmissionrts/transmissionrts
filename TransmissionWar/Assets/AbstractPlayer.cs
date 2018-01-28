@@ -41,10 +41,35 @@ public abstract class AbstractPlayer : MonoBehaviour {
 			SoldierController soldier = u.GetComponent<SoldierController> ();
 			if (soldier != null) {
 				soldier.Team = this.playerId;
+				soldier.id = u.position.ToString();
 				this.soldiers.Add (soldier);
 			}
 		}
 		//this.gameManager.GetGrid ().SetUpSoliders (soldiers);
+	}
+//	// not getting right teams soldienrs
+	public SoldierController getSoilderByID(string id ) {
+		foreach (SoldierController s in soldiers) {
+			if(s.id == id) {
+				return s;
+			}
+		}
+		return null;
+	}
+
+	public int getSoildersPos(string id ) {
+		int pos = 0;
+		foreach (SoldierController s in soldiers) {
+			
+			if(s.id == id) {
+				return pos;
+			}
+			pos++;
+		}
+		return -1;
+	}
+	public SoldierController getSoilderByPos(int pos ) {
+		return soldiers[pos];
 	}
 
 	protected virtual void Start(){
