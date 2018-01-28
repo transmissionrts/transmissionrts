@@ -23,7 +23,9 @@ public abstract class AbstractPlayer : MonoBehaviour {
 	}
 
 	[SerializeField]
-	public bool ReadyForNextTurn;
+	private bool readyForNextTurn;
+
+	public bool ReadyForNextTurn { get { return this.readyForNextTurn; } }
 
 	[SerializeField]
 	private bool isPlayingTurn;
@@ -56,17 +58,18 @@ public abstract class AbstractPlayer : MonoBehaviour {
 
 	public virtual void PlayTurn (){
 		Debug.LogFormat (this, "{0}.PlayTurn()", this.name);
-		this.ReadyForNextTurn = false;
+		this.readyForNextTurn = false;
 		this.isPlayingTurn = true;
 	}
 
 	public virtual void TurnEnded(){
 		Debug.LogFormat (this, "{0}.TurnEnded()", this.name);
 		this.isPlayingTurn = false;
+		this.readyForNextTurn = true;
 	}
 
 	public virtual void ResetTurn (){
-		this.ReadyForNextTurn = false;
+		this.readyForNextTurn = false;
 		this.isPlayingTurn = false;
 		this.birdMover.ResetPayload ();
 	}

@@ -180,7 +180,6 @@ public class GameManager : MonoBehaviour {
 
 	public void TurnExecuted(PlayerId playerId) {
 		var player = this.GetPlayer (playerId);
-		player.ReadyForNextTurn = true;
 
 		this.GoToNextTurn ();
 	}
