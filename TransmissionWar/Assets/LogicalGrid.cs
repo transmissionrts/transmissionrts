@@ -12,26 +12,32 @@ public class LogicalGrid : MonoBehaviour
 
 		public Vector2 Position { get { return this.position; } }
 
-		public List<Soldier> occupiedBy { get; private set; }
+		[SerializeField]
+		public Soldier OccupiedBy;
 
 		public Tile (Vector2 pos)
 		{
 			this.position = pos;
-			this.occupiedBy = new List<Soldier>();
 		}
 
 		public bool IsFree(){
-			return this.occupiedBy.Count == 0;
+			return this.OccupiedBy == null;
 		}
 	}
 
-	[SerializeField]
+	//[SerializeField]
 	private int _width;
-	[SerializeField]
+	//[SerializeField]
 	private int _height;
 
 	[SerializeField]
 	private Tile[,] tiles;
+
+	private GridCreator gridCreator;
+
+	void Awake(){
+		this.gridCreator = this.GetComponent<GridCreator> ();
+	}
 
 	public void Setup (int width, int height)
 	{
