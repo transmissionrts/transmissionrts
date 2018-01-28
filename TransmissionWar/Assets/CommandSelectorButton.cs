@@ -54,6 +54,7 @@ public class CommandSelectorButton : MonoBehaviour {
     //When any button is pressed
     void AnyButtonCommand(Transform arrowToEnable, int direction)
     {
+        Debug.Log(arrowToEnable.name);
         UnselectAll();
         if (this.localPlayer.nextCommand == direction)
         {

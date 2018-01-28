@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridCreator : MonoBehaviour {
-    public Transform gridPrefab, kingPrefab, pigeonPrefab, soldierPrefab;
+    public Transform gridPrefab, kingPrefab, pigeonPrefab, catSoldierPrefab, dogSoldierPrefab;
     public int gridWidth, gridHeight;
     public int soldierCount;
     public float tileWidth, tileHeight;
@@ -24,9 +24,14 @@ public class GridCreator : MonoBehaviour {
             orient = Quaternion.Euler(0, 0, 0);
         }
 
-		for (int i = 0; i < soldierCount; i++) {
-            Transform soldier = Instantiate(soldierPrefab, position: GridPosToWorldPos(startX + i, startY), rotation: orient);
-			container.Add(soldier);
+        Transform[] soldierPrefab = new Transform[2];
+
+        soldierPrefab[0] = catSoldierPrefab;
+        soldierPrefab[1] = dogSoldierPrefab;
+        
+        for (int i = 0; i < soldierCount; i++) {
+            Transform soldier = Instantiate(soldierPrefab[team], position: GridPosToWorldPos(startX + i, startY), rotation: Quaternion.Euler(0,180,0)); //rotation: orient
+            container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
             controller.Team = team;
         }
