@@ -28,38 +28,55 @@ public class CommandSelectorButton : MonoBehaviour {
 
     public void ButtonCommandUp()
     {
-        upArrow.gameObject.SetActive(true);
-        Debug.Log("Up Command Given to Pigeon");
-        label.GetComponent<Text>().text = "Choose unit to send command to";
-
-		this.localPlayer.SelectedCommand (Direction.UP);
+		UnselectAll();
+		if(this.localPlayer.nextCommand == Direction.UP) {
+			this.localPlayer.nextCommand = Direction.NONE;
+		} else {
+			this.localPlayer.SelectedCommand (Direction.UP);
+			upArrow.gameObject.SetActive(true);
+			Debug.Log("Up Command Given to Pigeon");
+			label.GetComponent<Text>().text = "Choose unit to send command to";
+		}
     }
 
     public void ButtonCommandDown()
     {
-        downArrow.gameObject.SetActive(true);
-        Debug.Log("Down Command Given to Pigeon");
-		label.GetComponent<Text> ().text = "Choose unit to send command to";
-
-		this.localPlayer.SelectedCommand (Direction.DOWN);
+		UnselectAll();
+		if(this.localPlayer.nextCommand == Direction.DOWN) {
+			this.localPlayer.nextCommand = Direction.NONE;
+		} else {
+			this.localPlayer.SelectedCommand (Direction.DOWN);
+			downArrow.gameObject.SetActive(true);
+			Debug.Log("Down Command Given to Pigeon");
+			label.GetComponent<Text>().text = "Choose unit to send command to";
+		}
     }
 
     public void ButtonCommandLeft()
     {
-        leftArrow.gameObject.SetActive(true);
-        Debug.Log("Left Command Given to Pigeon");
-        label.GetComponent<Text>().text = "Choose unit to send command to";
-
-		this.localPlayer.SelectedCommand (Direction.LEFT);
+       
+		UnselectAll();
+		if(this.localPlayer.nextCommand == Direction.LEFT) {
+			this.localPlayer.nextCommand = Direction.NONE;
+		} else {
+			this.localPlayer.SelectedCommand (Direction.LEFT);
+			leftArrow.gameObject.SetActive(true);
+			Debug.Log("Left Command Given to Pigeon");
+			label.GetComponent<Text>().text = "Choose unit to send command to";
+		}
     }
 
     public void ButtonCommandRight()
     {
-        rightArrow.gameObject.SetActive(true);
-        Debug.Log("Right Command Given to Pigeon");
-        label.GetComponent<Text>().text = "Choose unit to send command to";
-
-		this.localPlayer.SelectedCommand (Direction.RIGHT);
+		UnselectAll();
+		if(this.localPlayer.nextCommand == Direction.RIGHT) {
+			this.localPlayer.nextCommand = Direction.NONE;
+		} else {
+			this.localPlayer.SelectedCommand (Direction.RIGHT);
+			rightArrow.gameObject.SetActive(true);
+			Debug.Log("Right Command Given to Pigeon");
+			label.GetComponent<Text>().text = "Choose unit to send command to";
+		}
     }
 
     public void UnselectAll()

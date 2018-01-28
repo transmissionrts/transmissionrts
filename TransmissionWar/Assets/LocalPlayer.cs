@@ -6,7 +6,7 @@ public class LocalPlayer : AbstractPlayer {
 
 	private SelectableUnit selectedUnit;
 	private Transform pigeon;
-	private int nextCommand = Direction.NONE;
+	public int nextCommand = Direction.NONE;
 
 	public CommandSelectorButton commandSelectorButton;
 
