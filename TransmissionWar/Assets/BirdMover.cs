@@ -39,6 +39,7 @@ public class BirdMover : MonoBehaviour {
 	public Material noEnvelopeMaterial;
 	public Transform envelope;
 
+	public PlayerId playerId;
 
 	// Use this for initialization
 	void Awake () {
@@ -156,8 +157,10 @@ public class BirdMover : MonoBehaviour {
 		Vector3 v = rb.velocity;	// don't let the envelope be seen! 
 		v.y = 0;
 		rb.velocity = v;
-		Transform env = Instantiate(envelope, position: dropPosition, rotation: orientation);
-		env.GetComponent<Envelope> ().payload = payload;
+		Transform envObj = Instantiate(envelope, position: dropPosition, rotation: orientation);
+		Envelope env = envObj.GetComponent<Envelope> ();
+		env.payload = payload;
+		env.playerId = this.playerId;
 	}
 
 	public void Go(){

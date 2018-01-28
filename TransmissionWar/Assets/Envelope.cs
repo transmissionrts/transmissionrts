@@ -6,6 +6,8 @@ public class Envelope : MonoBehaviour {
 
 	public CommandPayload payload;
 
+	public PlayerId playerId;
+
 	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
@@ -31,7 +33,7 @@ public class Envelope : MonoBehaviour {
 			}
 			this.payload = null;
 		}
-		GameManager.Instance.PayloadDelivered();
+		GameManager.Instance.PayloadDelivered(this.playerId);
 		Destroy (gameObject);
 	}
 }

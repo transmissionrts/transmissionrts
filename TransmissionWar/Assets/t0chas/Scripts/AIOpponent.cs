@@ -13,16 +13,17 @@ public struct ScoredSoldier{
 	public int MinMovesToWin;
 }
 
+[DefaultExecutionOrder(order: -801)]
 public class AIOpponent : AbstractPlayer {
-
-	public PlayerId playerId;
-
 
 	IBehaviourTreeNode rootNode;
 
-	GameManager gameManager;
-
 	List<ScoredSoldier> ScoreUnits(List<SoldierController> units, int targetGridRow){
+
+		if (units == null) {
+			Debug.LogWarningFormat (this, "{0} units is empty", this.name);
+			return new List<ScoredSoldier> ();
+		}
 
 		LogicalGrid grid = this.gameManager.GetGrid ();
 
@@ -44,7 +45,7 @@ public class AIOpponent : AbstractPlayer {
 	}
 
 	public List<SoldierController> GetMyUnits(){
-		return new List<SoldierController> ();//TODO
+		return this.soldiers;
 	}
 
 
@@ -54,13 +55,19 @@ public class AIOpponent : AbstractPlayer {
 
 	private AIData aiData = new AIData();
 
-	void PlayTurn(){
+	public override void PlayTurn(){
+		base.PlayTurn ();
 		List<SoldierController> myUnits = this.GetMyUnits ();
 		this.aiData.myScoredUnits = this.ScoreUnits(myUnits, 0);
 
 		this.rootNode.Tick (new TimeData (Time.deltaTime));
 
 		this.gameManager.EndTurn (this.playerId);
+	}
+
+	public override void TurnEnded ()
+	{
+		base.TurnEnded ();
 	}
 
 	IBehaviourTreeNode BuildSimpleAI(){
@@ -105,8 +112,6 @@ public class AIOpponent : AbstractPlayer {
 
 	protected override void Start ()
 	{
-		base.Start ();
-
 		BehaviourTreeBuilder treeBuilder = new BehaviourTreeBuilder ();
 		this.rootNode = treeBuilder.Selector ("SomeSelector", true)
 			.Do ("some-action-1", t => {
@@ -119,6 +124,7 @@ public class AIOpponent : AbstractPlayer {
 			.Build ();
 
 		this.rootNode = this.BuildSimpleAI ();
+		base.Start ();
 	}
 
 	public override void ResetTurn ()

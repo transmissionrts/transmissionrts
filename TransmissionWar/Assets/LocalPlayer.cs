@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(order: -799)]
 public class LocalPlayer : AbstractPlayer {
 
 	private SelectableUnit selectedUnit;
@@ -28,25 +29,37 @@ public class LocalPlayer : AbstractPlayer {
 	}
 
 	public void SelectedUnit(SelectableUnit selectedUnit){
-		if (this.IsValidCommand (this.nextCommand)) {
-			SoldierController soldier = selectedUnit.GetComponent<SoldierController>();
-			if (soldier != null) {
-				
-				if (soldier.Team != GameManager.Instance.MyTeam) {
-					return;
-				}
-
-				if (this.selectedUnit != null)
-					this.selectedUnit.Deselect ();
-			
-				this.selectedUnit = selectedUnit;
-				this.selectedUnit.Select ();
-
-
-					this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
-					this.gameManager.EndTurn (this.playerId);
-			}
+		if (!this.IsValidCommand (this.nextCommand)) {
+			Debug.LogWarningFormat (this, "{0} wont move. cause {1} has invalid command {2}", selectedUnit.name, this.name, nextCommand);
+			return;
 		}
+		SoldierController soldier = selectedUnit.GetComponent<SoldierController> ();
+		if (soldier != null) {
+				
+			if (soldier.Team != this.playerId) {
+				return;
+			}
+
+			if (this.selectedUnit != null)
+				this.selectedUnit.Deselect ();
+			
+			this.selectedUnit = selectedUnit;
+			this.selectedUnit.Select ();
+
+
+			this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
+			this.gameManager.EndTurn (this.playerId);
+		}
+	}
+
+	public override void PlayTurn ()
+	{
+		base.PlayTurn ();
+	}
+
+	public override void TurnEnded ()
+	{
+		base.TurnEnded ();
 	}
 
 	public override void ResetTurn(){
