@@ -19,7 +19,7 @@ public class LogicalGrid : MonoBehaviour
 			this.position = pos;
 		}
 
-		public bool IsFree(){
+		public bool IsFree() {
 			return this.OccupiedBy == null;
 		}
 	}
@@ -121,11 +121,13 @@ public class LogicalGrid : MonoBehaviour
 	}
 		
 	public void RegisterSoldier(SoldierController soldier, Vector2 pos) {
-		Debug.LogFormat("THERE:: {0}", soldier.Position);
+		Debug.LogFormat("Deregistering:: {0}", soldier.Position);
 		Tile tile = this.GetTile(soldier.Position);
-		tile.OccupiedBy = null;
+		if (tile.OccupiedBy == soldier) {
+			tile.OccupiedBy = null;
+		}
 
-		Debug.LogFormat("HERE:: {0}", pos);
+		Debug.LogFormat("Registered HERE:: {0}", pos);
 		tile = this.GetTile(pos);
 		tile.OccupiedBy = soldier;
 		soldier.Position = pos;
@@ -138,5 +140,36 @@ public class LogicalGrid : MonoBehaviour
 				Debug.LogErrorFormat (this, "{0}.SetUp() {1} has no tile at {2}!", this.name, soldier.name, soldier.Position);
 			tile.OccupiedBy = soldier;
 		}
+	}
+
+	public List<Vector2> Neighbors(Vector2 currentPos) {
+		return new List<Vector2>{
+			// up 1 square
+			new Vector2(currentPos.x, currentPos.y + 1),
+			// down 1 square
+			new Vector2(currentPos.x, currentPos.y - 1),
+			// left 1 square
+			new Vector2(currentPos.x - 1, currentPos.y),
+			// right 1 square
+			new Vector2(currentPos.x + 1, currentPos.y),
+
+			// diag top right
+			new Vector2(currentPos.x + 1, currentPos.y + 1),
+			// diag top left
+			new Vector2(currentPos.x - 1, currentPos.y + 1),
+			// diag bottom left
+			new Vector2(currentPos.x - 1, currentPos.y - 1),
+			// diag bottom right
+			new Vector2(currentPos.x + 1, currentPos.y - 1)
+		};
+	}
+
+	public Vector2? OpponentNearBy(Vector2 currentPos) {
+		foreach(var nn in Neighbors(currentPos)) {
+			if (IsValidPos(nn) && !IsTileFree(nn)) {
+				return nn;
+			}
+		}
+		return null;
 	}
 }

@@ -69,6 +69,4 @@ public class LocalPlayer : AbstractPlayer {
 		this.nextCommand = Direction.NONE;
 		base.ResetTurn ();
 	}
-
-
 }
