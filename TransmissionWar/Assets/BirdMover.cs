@@ -160,9 +160,13 @@ public class BirdMover : MonoBehaviour {
 			GameManager.Instance.PayloadDelivered();
 		}
 		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
-
 		Quaternion orientation = Quaternion.Euler(0, 0, 0);
-		Instantiate(envelope, position: rb.position, rotation: orientation);
+		Vector3 dropPosition = targetPosition;
+		dropPosition.y = rb.position.y - 0.1f;
+		Vector3 v = rb.velocity;	// don't let the envelope be seen! 
+		v.y = 0;
+		rb.velocity = v;
+		Instantiate(envelope, position: dropPosition, rotation: orientation);
 	}
 
 	public void Go(){
