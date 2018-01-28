@@ -8,9 +8,12 @@ public class LocalPlayer : AbstractPlayer {
 	private Transform pigeon;
 	private int nextCommand;
 
+	public CommandSelectorButton commandSelectorButton;
+
 	protected override void Start ()
 	{
 		base.Start ();
+		this.commandSelectorButton = GameObject.FindObjectOfType<CommandSelectorButton> ();
 	}
 
 	public void SelectedCommand(int command)
@@ -19,13 +22,29 @@ public class LocalPlayer : AbstractPlayer {
 	}
 
 	public void SelectedUnit(SelectableUnit selectedUnit){
-		this.selectedUnit = selectedUnit;
-		///????
-		SoldierController soldier = this.selectedUnit.GetComponent<SoldierController>();
+		SoldierController soldier = selectedUnit.GetComponent<SoldierController>();
 		if (soldier != null) {
+			
+			if (soldier.Team != GameManager.Instance.MyTeam) {
+				return;
+			}
+
+			if (this.selectedUnit != null)
+				this.selectedUnit.Deselect ();
+		
+			this.selectedUnit = selectedUnit;
+			this.selectedUnit.Select ();
+			///????
+
 			this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
 			this.gameManager.EndTurn (this.playerId);
 		}
+	}
+
+	public override void ResetTurn(){
+		if (this.selectedUnit != null)
+			this.selectedUnit.Deselect ();
+		this.commandSelectorButton.UnselectAll ();
 	}
 
 

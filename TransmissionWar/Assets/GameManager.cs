@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+	public int MyTeam;
+
     // Use this for initialization
     void Start () {
 		// TODO: initialize soldier & code
@@ -100,4 +102,23 @@ public class GameManager : MonoBehaviour {
 	public void EndTurn(PlayerId playerId){
         // TODO
     }
+
+
+	public AbstractPlayer PlayerA;
+	public AbstractPlayer PlayerB;
+	public void RegisterPlayer(AbstractPlayer player){
+		if (player == null)
+			return;
+		if (player.playerId == PlayerId.PlayerA)
+			this.PlayerA = player;
+		if (player.playerId == PlayerId.PlayerB)
+			this.PlayerB = player;
+	}
+
+	public void PayloadDelivered(){
+		if (this.PlayerA != null)
+			this.PlayerA.ResetTurn ();
+		if (this.PlayerB != null)
+			this.PlayerA.ResetTurn ();
+	}
 }

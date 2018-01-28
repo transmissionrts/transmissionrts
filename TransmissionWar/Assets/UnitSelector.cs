@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitSelector : MonoBehaviour {
-
     Camera cam;
 
     public Transform pigeon;
-
-    public int nextCommand;
 
 	public LocalPlayer localPlayer;
 
@@ -22,9 +19,7 @@ public class UnitSelector : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButtonDown(0)) {
         RaycastHit hit;
         Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit);
         Vector3 point = hit.point;
@@ -33,13 +28,15 @@ public class UnitSelector : MonoBehaviour {
         if (hitTransform != null)
             if (hitTransform.name.Contains("Soldier")) {
                 Debug.Log("hit");
-                    SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
-                    su.Select();
+
+                SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
+
+
 				this.localPlayer.SelectedUnit (su);
 
 				//????
                     MoveableUnit unit = su.GetComponent<MoveableUnit>();
-                    unit.command = nextCommand;
+                    unit.command = 0;
 
 				pigeon.GetComponent<BirdMover>().SetTarget(su.transform);
 				//????

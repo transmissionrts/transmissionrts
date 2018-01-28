@@ -120,4 +120,9 @@ public class AIOpponent : AbstractPlayer {
 
 		this.rootNode = this.BuildSimpleAI ();
 	}
+
+	public override void ResetTurn ()
+	{
+		
+	}
 }

@@ -11,5 +11,10 @@ public abstract class AbstractPlayer : MonoBehaviour {
 	protected virtual void Start(){
 		Debug.LogWarningFormat ("{0}.Start()", this.name);
 		this.gameManager = GameManager.Instance;
+
+		this.gameManager.RegisterPlayer (this);
+			
 	}
+
+	public abstract void ResetTurn ();
 }

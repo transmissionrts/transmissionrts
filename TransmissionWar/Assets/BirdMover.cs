@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class CommandPayload {
+	public Transform Target;
+	public SoldierController Solider;
+	public int Direction;
+
+}
+
 public class BirdMover : MonoBehaviour {
 
 	public Transform target;
@@ -14,8 +21,8 @@ public class BirdMover : MonoBehaviour {
 	public float dropAltitude;
 	float descentLength;
 
-    bool hasTarget;
 
+    bool hasTarget, intercepted;
 
     enum FlightPhase {ToTarget, BackHome};
 
@@ -26,6 +33,9 @@ public class BirdMover : MonoBehaviour {
 	Animator anim;
 	float lastFlap = 0f;
 	public float cruisingAltitude = 5;
+
+	CommandPayload payload;
+
 	// Use this for initialization
 	void Awake () {
 		initialPosition = transform.position;
@@ -36,11 +46,16 @@ public class BirdMover : MonoBehaviour {
 		descentLength = descentRatio * (cruisingAltitude - dropAltitude);
 	}
 
+	public void SetCommand(CommandPayload payload){
+		this.payload = payload;
+	}
+
     public void SetTarget(Transform newTarget) {
         target = newTarget;
 
         if (newTarget != null) {
             targetPosition = target.position;
+            phase = FlightPhase.ToTarget;
         }
         else
         {
@@ -122,5 +137,15 @@ public class BirdMover : MonoBehaviour {
 
 	void dropPayload () {
 		print ("reached target, delivering payload");
+		if (!intercepted) {
+			
+			if (this.payload != null) {
+				if (this.payload.Solider != null) {
+					this.payload.Solider.ExecuteCommand (this.payload.Direction);
+				}
+				this.payload = null;
+			}
+			GameManager.Instance.PayloadDelivered ();
+		}
 	}
 }
