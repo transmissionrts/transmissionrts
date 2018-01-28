@@ -91,7 +91,7 @@ public class LogicalGrid : MonoBehaviour
 		return isFree;
 	}
 
-	public Vector2 GetTargetPos(Vector2 targetPos, int movementDirection) {
+	public Vector2 GetTargetPos(Vector2 targetPos, Direction movementDirection) {
 		switch (movementDirection) {
 		case Direction.UP:
 			targetPos.y += 1;
@@ -109,7 +109,7 @@ public class LogicalGrid : MonoBehaviour
 		return targetPos;
 	}
 
-	public bool CanMakeMove (SoldierController soldier, int movementDirection)
+	public bool CanMakeMove (SoldierController soldier, Direction movementDirection)
 	{
 		Vector2 soldierPos = soldier.Position;
 		Vector2 targetPos = GetTargetPos(soldierPos, movementDirection);

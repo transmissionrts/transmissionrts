@@ -116,14 +116,14 @@ public class GameManager : MonoBehaviour {
 		return this.players [idx];
 	}
 
-	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
+	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, Direction movementDirection){
 		if (soldier.Team == playerId && this.logicalGrid.CanMakeMove(soldier, movementDirection)) {
 			var targetPos = this.logicalGrid.GetTargetPos(soldier.Position, movementDirection);
 			Debug.LogFormat("MAKE MOVE {0}, {1}", soldier.Position, movementDirection);
 			CommandPayload command = new CommandPayload () {
 				Target = soldier.transform,
 				Solider = soldier,
-				Direction = movementDirection,
+				direction = movementDirection,
 				FinalPosition = targetPos
 			};
 
