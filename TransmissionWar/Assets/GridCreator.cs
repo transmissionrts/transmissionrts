@@ -69,12 +69,7 @@ public class GridCreator : MonoBehaviour {
         SpawnSoldiers(teamB, 1, Mathf.RoundToInt(gridWidth/2), gridHeight -1 );
         kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight), Quaternion.identity);
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
+    
     public Vector3 GridPosToWorldPos(int x, int y) {
 
         float xoffset = 0, yoffset = 0;
