@@ -35,6 +35,19 @@ public class LogicalGrid : MonoBehaviour
 
 	private GridCreator gridCreator;
 
+	public Transform KingATransform;
+	public Transform KingBTransform;
+
+	public int Width {
+		get{ return this._width; }
+		private set{ this._width = value; }
+	}
+
+	public int Height {
+		get{ return this._height; }
+		private set{ this._height = value; }
+	}
+
 	void Awake(){
 		this.gridCreator = this.GetComponent<GridCreator> ();
 	}
@@ -50,16 +63,6 @@ public class LogicalGrid : MonoBehaviour
 				this.tiles [x, y] = new Tile (new Vector2 (x, y));
 			}
 		}
-	}
-
-	public int Width {
-		get{ return this._width; }
-		private set{ this._width = value; }
-	}
-
-	public int Height {
-		get{ return this._height; }
-		private set{ this._height = value; }
 	}
 
 	public bool IsValidPos (Vector2 pos)

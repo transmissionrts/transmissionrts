@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[DefaultExecutionOrder(order: -1000)]
 public class GridCreator : MonoBehaviour {
     public Transform gridPrefab, kingPrefab, pigeonPrefab, soldierPrefab;
     public int gridWidth, gridHeight;
@@ -9,13 +11,13 @@ public class GridCreator : MonoBehaviour {
     public float tileWidth, tileHeight;
 
     Transform mainCamera;
-    List<Transform> teamA;
+    public List<Transform> teamA;
     Transform kingA;
-	List<Transform> teamB;
+	public List<Transform> teamB;
     Transform kingB;
 
     void SpawnSoldiers(List<Transform> container, int team, int startX, int startY) {
-        container = new List<Transform>();
+		container.Clear ();
 
         Quaternion orient;
         if (team == 0) {
@@ -28,14 +30,13 @@ public class GridCreator : MonoBehaviour {
             Transform soldier = Instantiate(soldierPrefab, position: GridPosToWorldPos(startX + i, startY), rotation: orient);
 			container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
-            controller.Team = team;
         }
 
         Debug.Log(string.Format("Container LENGTH:: {0}", container.Count));
     }
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         mainCamera.position = new Vector3(gridWidth / 2 * tileWidth, Mathf.Max(gridWidth, gridHeight) * 10, gridWidth / 2 * tileWidth);
@@ -62,12 +63,16 @@ public class GridCreator : MonoBehaviour {
 		grid.Setup (this.gridWidth, this.gridHeight);
 
         // 0 for team A
+		this.teamA = new List<Transform>();
         SpawnSoldiers(teamA, 0, 0, 0);
         kingA = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, -1), Quaternion.identity);
+		grid.KingATransform = kingA;
 
         // 1 for team B
+		this.teamB = new List<Transform>();
         SpawnSoldiers(teamB, 1, 0, gridHeight -1 ); //Mathf.RoundToInt(gridWidth),
         kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight), Quaternion.identity);
+		grid.KingBTransform = kingB;
     }
     
     public Vector3 GridPosToWorldPos(int x, int y) {

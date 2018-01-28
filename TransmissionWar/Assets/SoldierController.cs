@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SoldierController : MonoBehaviour {
-	int team;
-	public int Team {
+	PlayerId team;
+	public PlayerId Team {
 		get {return team;}
 		set {team = value;}
 	}

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,7 @@ public enum PlayerId{
 	PlayerB = 1
 }
 
+[DefaultExecutionOrder(order: -900)]
 public class GameManager : MonoBehaviour {
 	public enum GameState {
 		InProgress,
@@ -33,6 +35,10 @@ public class GameManager : MonoBehaviour {
 	public LogicalGrid GetGrid(){
 		return this.logicalGrid;
 	}
+
+
+	[SerializeField]
+	private BirdMover birdMoverPrefab;
 
     private static GameManager instance;
     public static GameManager Instance
@@ -68,10 +74,6 @@ public class GameManager : MonoBehaviour {
     void Start () {
 		// TODO: initialize soldier & code
 		this.logicalGrid = this.gridCreator.GetGrid();
-	}
-
-	// Update is called once per frame
-	void Update () {
 	}
 
 	void Finish() {
@@ -110,14 +112,20 @@ public class GameManager : MonoBehaviour {
 		return idx;
 	}
 
-	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
+	public AbstractPlayer GetPlayer(PlayerId playerId){
 		int idx = this.PlayerIdToInt (playerId);
+		return this.players [idx];
+	}
+
+	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
+		
 		CommandPayload command = new CommandPayload () {
 			Target = soldier.transform,
 			Solider = soldier,
 			Direction = movementDirection
 		};
-		this.players [idx].BirdMover.SetCommand (command);
+		var player = this.GetPlayer (playerId);
+		player.BirdMover.SetCommand (command);
 	}
 
 	public void EndTurn(PlayerId playerId){
@@ -132,6 +140,7 @@ public class GameManager : MonoBehaviour {
 			foreach (var player in this.players) {
 				if (player == null)
 					continue;
+				player.TurnEnded ();
 				player.BirdMover.Go();
 			}
 		}
@@ -147,16 +156,50 @@ public class GameManager : MonoBehaviour {
 		int idx = this.PlayerIdToInt (player.playerId);
 		if (this.players [idx] == null) {
 			this.players [idx] = player;
+			if (idx == 0) {
+				player.SetUp (this.logicalGrid.KingATransform.position, this.gridCreator.teamA);
+			}
+			if (idx == 1) {
+				player.SetUp (this.logicalGrid.KingBTransform.position, this.gridCreator.teamB);
+			}
+			player.BirdMover = GameObject.Instantiate (this.birdMoverPrefab, player.transform.position, Quaternion.identity);
+
+			this.StartCoroutine (this.doDelayedStart (player));
 			return;
 		}
 		Debug.LogErrorFormat (player, "Duplicate player '{0}' [{1}, {2}]", idx, player.name, this.players[idx].name);
 	}
 
-	public void PayloadDelivered(){
+	private IEnumerator doDelayedStart(AbstractPlayer player){
+		yield return null;
+		player.PlayTurn ();
+	}
+
+	public void PayloadDelivered(PlayerId playerId){
+		var player = this.GetPlayer (playerId);
+		player.ReadyForNextTurn = true;
+
+		this.GoToNextTurn ();
+	}
+
+	public void GoToNextTurn(){
+		bool goToNextTurn = true;
 		foreach (var player in this.players) {
 			if (player == null)
 				continue;
-			player.ResetTurn ();///?????
+			if (!player.ReadyForNextTurn){
+				goToNextTurn = false;
+				break;
+			}
+		}
+		if(goToNextTurn){
+			foreach (var player in this.players) {
+				if (player == null)
+					continue;
+				player.ReadyForNextTurn = false;
+				player.ResetTurn ();
+				player.PlayTurn ();
+			}
 		}
 	}
 }

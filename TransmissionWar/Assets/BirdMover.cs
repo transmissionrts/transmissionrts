@@ -39,6 +39,7 @@ public class BirdMover : MonoBehaviour {
 	public Material noEnvelopeMaterial;
 	public Transform envelope;
 
+	public PlayerId playerId;
 
 	// Use this for initialization
 	void Awake () {
@@ -157,7 +158,7 @@ public class BirdMover : MonoBehaviour {
 				}
 				this.payload = null;
 			}
-			GameManager.Instance.PayloadDelivered();
+			GameManager.Instance.PayloadDelivered(this.playerId);
 		}
 		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
 		Quaternion orientation = Quaternion.Euler(0, 0, 0);
