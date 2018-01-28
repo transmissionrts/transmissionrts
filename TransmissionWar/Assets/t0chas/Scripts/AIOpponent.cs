@@ -57,18 +57,24 @@ public class AIOpponent : AbstractPlayer {
 
 	private AIData aiData = new AIData();
 
+	public int turnN = 0;
+
 	public override void PlayTurn(){
+		Debug.LogFormat(this, "{0} Playing Turn: {1}", this.name, this.turnN);
 		base.PlayTurn ();
 		List<SoldierController> myUnits = this.GetMyUnits ();
 		this.aiData.myScoredUnits = this.ScoreUnits(myUnits, 0);
 
 		this.rootNode.Tick (new TimeData (Time.deltaTime));
 
+		Debug.LogFormat(this, "{0} Ending Turn: {1}", this.name, this.turnN);
 		this.gameManager.EndTurn (this.playerId);
 	}
 
 	public override void TurnEnded ()
 	{
+		Debug.LogFormat(this, "{0} Turn: {1} Ended", this.name, this.turnN);
+		this.turnN++;
 		base.TurnEnded ();
 	}
 
