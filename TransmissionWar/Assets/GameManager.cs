@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour {
 		TeamBWon,
 		Draw,
 	}
+
+	private List<SoldierController> teamA;
+	private List<SoldierController> teamB;
+
     private bool teamAFinished = false;
 	private bool teamBFinished = false;
 	private List<SoldierController> soldiers;
@@ -53,12 +57,16 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		// TODO: initialize soldier & code	
+		// TODO: initialize soldier & code
 		this.logicalGrid = this.gridCreator.GetGrid();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
+	}
+
+	void Finish() {
+		SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
 	}
 
 	void SoliderUpdate(int team, Vector2 soldierPos) {
@@ -84,15 +92,11 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void Finish() {
-		SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
-	}
-
 	public void IssueCommandTo(PlayerId playerId, Soldier soldier, int movementDirection){
 		//TODO
 	}
 
 	public void EndTurn(PlayerId playerId){
-		//TODO
-	}
+        // TODO
+    }
 }
