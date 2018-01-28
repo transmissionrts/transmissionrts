@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(order: 100)]
 public class SoldierController : MonoBehaviour {
 	PlayerId team;
 	public PlayerId Team {
 		get {return team;}
 		set {team = value;}
 	}
+
     SelectableUnit selectable;
 	public Vector2 Position;
+
+
 
 	// Use this for initialization
 	void Start () {
         selectable = GetComponent<SelectableUnit>();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
+    }
+		
 	public void Select() {
 		this.selectable.Select();
 	}

@@ -38,7 +38,6 @@ public class GridCreator : MonoBehaviour {
 			soldier.name = string.Format("{0}_{1:00}", soldierPrefab[team].name, i); 
             container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
-
             logicalGrid.RegisterSoldier(soldier.GetComponent<SoldierController>(), new Vector2(startX + i, startY));
 
             controller.Team = (PlayerId) team;
@@ -85,6 +84,7 @@ public class GridCreator : MonoBehaviour {
 		this.teamB = new List<Transform>();
         SpawnSoldiers(teamB, 1, 0, gridHeight -1 ); //Mathf.RoundToInt(gridWidth),
         kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight), Quaternion.identity);
+
 		logicalGrid.KingBTransform = kingB;
     }
     
