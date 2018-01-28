@@ -54,7 +54,6 @@ namespace TransmissionNetworking {
 
 		private Timer _timer;
 
-
 		// Use this for initialization
 		void Start () {
 
