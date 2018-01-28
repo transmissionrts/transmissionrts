@@ -14,7 +14,12 @@ public class Envelope : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (rb.velocity.magnitude == 0) {
+	}
+
+	void OnCollisionEnter (Collision col) {
+	 string name = col.gameObject.name;
+		if (col.gameObject.GetComponent<BirdMover>() == null) {	// not the pigeon itself
+			print ("Delivering message to " + col.gameObject.name);
 			deliverMessage ();
 		}
 	}
