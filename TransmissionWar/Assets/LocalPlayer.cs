@@ -54,8 +54,7 @@ public class LocalPlayer : AbstractPlayer {
 
 
 			this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
-
-			if (this.isNetworkedScene)
+			if (this.isNetworkedScene && messanger != null)
 				messanger.SendMessage (this.playerId.ToString () + "-" + soldier.id + "-" + this.nextCommand.ToString ());
 			this.gameManager.EndTurn (this.playerId);
 		}
