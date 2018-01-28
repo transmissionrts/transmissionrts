@@ -66,8 +66,8 @@ public class GridCreator : MonoBehaviour {
         kingA = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, -1), Quaternion.identity);
 
         // 1 for team B
-        SpawnSoldiers(teamB, 1, Mathf.RoundToInt(gridWidth/2), gridHeight);
-        kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight + 1), Quaternion.identity);
+        SpawnSoldiers(teamB, 1, Mathf.RoundToInt(gridWidth/2), gridHeight -1 );
+        kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight), Quaternion.identity);
     }
 
     // Update is called once per frame
