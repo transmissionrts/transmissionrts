@@ -159,4 +159,18 @@ public class BirdMover : MonoBehaviour {
 		Quaternion orientation = Quaternion.Euler(0, 0, 0);
 		Instantiate(envelope, position: rb.position, rotation: orientation);
 	}
+
+	public void Go(){
+		if (!this.HasPayload ())
+			return;
+		this.SetTarget (this.payload.Target);
+	}
+
+	public bool HasPayload(){
+		return this.payload != null;
+	}
+
+	public void ResetPayload(){
+		this.payload = null;
+	}
 }

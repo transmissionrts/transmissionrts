@@ -30,16 +30,7 @@ public class UnitSelector : MonoBehaviour {
                 Debug.Log("hit");
 
                 SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
-
-
 				this.localPlayer.SelectedUnit (su);
-
-				//????
-                    MoveableUnit unit = su.GetComponent<MoveableUnit>();
-                    unit.command = 0;
-
-				pigeon.GetComponent<BirdMover>().SetTarget(su.transform);
-				//????
             }
         }
     }

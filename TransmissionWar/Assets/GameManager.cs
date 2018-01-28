@@ -15,6 +15,11 @@ public class GameManager : MonoBehaviour {
 		Draw,
 	}
 
+	public AbstractPlayer[] players;
+
+	public AbstractPlayer PlayerA { get { return this.players [0]; } }
+	public AbstractPlayer PlayerB  { get { return this.players [1]; } }
+
 	private List<SoldierController> teamA;
 	private List<SoldierController> teamB;
 
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviour {
 		}
 		instance = this;//registering self to static instance
 		this.gridCreator = GameObject.FindObjectOfType<GridCreator>();
+		this.players = new AbstractPlayer[2];
 	}
 
     private GameState currentGameState = GameState.InProgress;
@@ -95,30 +101,62 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public int PlayerIdToInt(PlayerId playerId){
+		int idx = (int)playerId;
+		if (idx < 0)
+			idx = 0;
+		if (idx > 1)
+			idx = 1;
+		return idx;
+	}
+
 	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
-		//TODO
+		int idx = this.PlayerIdToInt (playerId);
+		CommandPayload command = new CommandPayload () {
+			Target = soldier.transform,
+			Solider = soldier,
+			Direction = movementDirection
+		};
+		this.players [idx].BirdMover.SetCommand (command);
 	}
 
 	public void EndTurn(PlayerId playerId){
-        // TODO
+		bool endTurn = true;
+		foreach (var player in this.players) {
+			if (player == null)
+				continue;
+			if (!player.BirdMover.HasPayload ())
+				endTurn = false;
+		}
+		if (endTurn) {
+			foreach (var player in this.players) {
+				if (player == null)
+					continue;
+				player.BirdMover.Go();
+			}
+		}
     }
 
 
-	public AbstractPlayer PlayerA;
-	public AbstractPlayer PlayerB;
+
+
+
 	public void RegisterPlayer(AbstractPlayer player){
 		if (player == null)
 			return;
-		if (player.playerId == PlayerId.PlayerA)
-			this.PlayerA = player;
-		if (player.playerId == PlayerId.PlayerB)
-			this.PlayerB = player;
+		int idx = this.PlayerIdToInt (player.playerId);
+		if (this.players [idx] == null) {
+			this.players [idx] = player;
+			return;
+		}
+		Debug.LogErrorFormat (player, "Duplicate player '{0}' [{1}, {2}]", idx, player.name, this.players[idx].name);
 	}
 
 	public void PayloadDelivered(){
-		if (this.PlayerA != null)
-			this.PlayerA.ResetTurn ();
-		if (this.PlayerB != null)
-			this.PlayerA.ResetTurn ();
+		foreach (var player in this.players) {
+			if (player == null)
+				continue;
+			player.ResetTurn ();///?????
+		}
 	}
 }
