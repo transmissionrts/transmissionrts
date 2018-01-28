@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
     private bool teamAFinished = false;
 	private bool teamBFinished = false;
 	private List<SoldierController> soldiers;
-	private GridCreator gridCreator;
+	public GridCreator gridCreator;
 
 	[SerializeField]
 	private LogicalGrid logicalGrid;
