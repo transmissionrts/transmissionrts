@@ -49,16 +49,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-	void Awake(){
-		if (instance != null) {
-			Debug.LogErrorFormat (this, "Duplicate GameManager instances [{0}, {1}]", this.name, instance.name);
-			return;
-		}
-		instance = this;//registering self to static instance
-		this.gridCreator = GameObject.FindObjectOfType<GridCreator>();
-		this.players = new AbstractPlayer[2];
-	}
-
     private GameState currentGameState = GameState.InProgress;
     public GameState CurrentGameState
     {
@@ -72,8 +62,17 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		// TODO: initialize soldier & code
+		this.gridCreator = GameObject.FindObjectOfType<GridCreator>();
 		this.logicalGrid = this.gridCreator.GetGrid();
+	}
+
+	void Awake(){
+		if (instance != null) {
+			Debug.LogErrorFormat (this, "Duplicate GameManager instances [{0}, {1}]", this.name, instance.name);
+			return;
+		}
+		this.players = new AbstractPlayer[2];
+		instance = this;//registering self to static instance
 	}
 
 	void Finish() {
@@ -117,15 +116,23 @@ public class GameManager : MonoBehaviour {
 		return this.players [idx];
 	}
 
-	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, Direction movementDirection){
-		
-		CommandPayload command = new CommandPayload () {
-			Target = soldier.transform,
-			Solider = soldier,
-			direction = movementDirection
-		};
-		var player = this.GetPlayer (playerId);
-		player.BirdMover.SetCommand (command);
+	public void IssueCommandTo(PlayerId playerId, SoldierController soldier, int movementDirection){
+		if (soldier.Team == playerId && this.logicalGrid.CanMakeMove(soldier, movementDirection)) {
+			var targetPos = this.logicalGrid.GetTargetPos(soldier.Position, movementDirection);
+			Debug.LogFormat("MAKE MOVE {0}, {1}", soldier.Position, movementDirection);
+			CommandPayload command = new CommandPayload () {
+				Target = soldier.transform,
+				Solider = soldier,
+				Direction = movementDirection,
+				FinalPosition = targetPos
+			};
+
+			var player = this.GetPlayer (playerId);
+			this.logicalGrid.RegisterSoldier(soldier, targetPos);
+			player.BirdMover.SetCommand (command);
+		} else {
+			Debug.LogFormat("CANNOT MAKE MOVE {0}, {1}", soldier.Position, movementDirection);
+		}
 	}
 
 	public void EndTurn(PlayerId playerId){
@@ -145,10 +152,6 @@ public class GameManager : MonoBehaviour {
 			}
 		}
     }
-
-
-
-
 
 	public void RegisterPlayer(AbstractPlayer player){
 		if (player == null)

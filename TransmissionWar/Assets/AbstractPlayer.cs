@@ -42,6 +42,7 @@ public abstract class AbstractPlayer : MonoBehaviour {
 				this.soldiers.Add (soldier);
 			}
 		}
+		//this.gameManager.GetGrid ().SetUpSoliders (soldiers);
 	}
 
 	protected virtual void Start(){

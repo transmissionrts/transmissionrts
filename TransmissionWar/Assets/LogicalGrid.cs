@@ -15,8 +15,7 @@ public class LogicalGrid : MonoBehaviour
 		[SerializeField]
 		public SoldierController OccupiedBy;
 
-		public Tile (Vector2 pos)
-		{
+		public Tile (Vector2 pos) {
 			this.position = pos;
 		}
 
@@ -67,9 +66,9 @@ public class LogicalGrid : MonoBehaviour
 
 	public bool IsValidPos (Vector2 pos)
 	{
-		if (pos.x < 0 || pos.x > this.Width)
+		if (pos.x < 0 || pos.x > this.Width -1)
 			return false;
-		if (pos.y < 0 || pos.y > this.Height)
+		if (pos.y < 0 || pos.y > this.Height - 1)
 			return false;
 		return true;
 	}
@@ -83,15 +82,16 @@ public class LogicalGrid : MonoBehaviour
 	public bool IsTileFree (Vector2 pos)
 	{
 		Tile tile = this.GetTile (pos);
-		if (tile == null)
+		if (tile == null) {
+			Debug.LogWarningFormat ("{0}.IsTileFree({1}) is Null", this.name, pos);
 			return false;
-		return tile.IsFree();
+		}
+		var isFree = tile.IsFree();
+		Debug.LogFormat ("{0}.IsTileFree({1}): {2}", this.name, pos, isFree);
+		return isFree;
 	}
 
-	public bool CanMakeMove (SoldierController soldier, Direction movementDirection)
-	{
-		Vector2 soldierPos = soldier.Position;
-		Vector2 targetPos = soldierPos;
+	public Vector2 GetTargetPos(Vector2 targetPos, int movementDirection) {
 		switch (movementDirection) {
 		case Direction.UP:
 			targetPos.y += 1;
@@ -106,6 +106,32 @@ public class LogicalGrid : MonoBehaviour
 			targetPos.x += 1;
 			break;
 		}
+		return targetPos;
+	}
+
+	public bool CanMakeMove (SoldierController soldier, int movementDirection)
+	{
+		Vector2 soldierPos = soldier.Position;
+		Vector2 targetPos = GetTargetPos(soldierPos, movementDirection);
 		return this.IsTileFree (targetPos);
+	}
+		
+	public void RegisterSoldier(SoldierController soldier, Vector2 pos) {
+		Debug.LogFormat("THERE:: {0}", soldier.Position);
+		Tile tile = this.GetTile(soldier.Position);
+		tile.OccupiedBy = null;
+
+		Debug.LogFormat("HERE:: {0}", pos);
+		tile = this.GetTile(pos);
+		tile.OccupiedBy = soldier;
+	}
+
+	public void SetUpSoliders(IEnumerable<SoldierController> soldiers){
+		foreach (var soldier in soldiers) {
+			var tile = this.GetTile (soldier.Position);
+			if (tile == null)
+				Debug.LogErrorFormat (this, "{0}.SetUp() {1} has no tile at {2}!", this.name, soldier.name, soldier.Position);
+			tile.OccupiedBy = soldier;
+		}
 	}
 }

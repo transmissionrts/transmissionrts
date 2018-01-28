@@ -1112,6 +1112,40 @@ Prefab:
       value: 
       objectReference: {fileID: 4665295011801368, guid: 9e994000168a5754586353ce7aefdb24,
         type: 2}
+    - target: {fileID: 114157915895769454, guid: 73508f57ba3014118b6d4561158bb3d7,
+        type: 2}
+      propertyPath: gridWidth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114157915895769454, guid: 73508f57ba3014118b6d4561158bb3d7,
+        type: 2}
+      propertyPath: gridHeight
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114157915895769454, guid: 73508f57ba3014118b6d4561158bb3d7,
+        type: 2}
+      propertyPath: lightTile
+      value: 
+      objectReference: {fileID: 4026641113549474, guid: e3a52f6e5070c3048bc5a748e29ee063,
+        type: 2}
+    - target: {fileID: 114157915895769454, guid: 73508f57ba3014118b6d4561158bb3d7,
+        type: 2}
+      propertyPath: darkTile
+      value: 
+      objectReference: {fileID: 4026641113549474, guid: 1f9aee173b7dedd48852562b3c687103,
+        type: 2}
+    - target: {fileID: 114157915895769454, guid: 73508f57ba3014118b6d4561158bb3d7,
+        type: 2}
+      propertyPath: dogKingPrefab
+      value: 
+      objectReference: {fileID: 4259785280962356, guid: 664ebd6971710484a835a4ef41ec9bce,
+        type: 2}
+    - target: {fileID: 114157915895769454, guid: 73508f57ba3014118b6d4561158bb3d7,
+        type: 2}
+      propertyPath: catKingPrefab
+      value: 
+      objectReference: {fileID: 4641121518398726, guid: d831868e89a00c84fab49a8e6fe2f39f,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73508f57ba3014118b6d4561158bb3d7, type: 2}
   m_IsPrefabParent: 0

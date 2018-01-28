@@ -40,7 +40,6 @@ public class UnitSelector : MonoBehaviour {
                     if (hitTransform.name.Contains("Soldier"))
                     {
                         Debug.Log("hit");
-
                         SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
                         this.localPlayer.SelectedUnit(su);
                     }
