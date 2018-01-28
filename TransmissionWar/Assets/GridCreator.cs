@@ -62,11 +62,11 @@ public class GridCreator : MonoBehaviour {
 		grid.Setup (this.gridWidth, this.gridHeight);
 
         // 0 for team A
-        SpawnSoldiers(teamA, 0, 1, 0);
+        SpawnSoldiers(teamA, 0, 0, 0);
         kingA = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, -1), Quaternion.identity);
 
         // 1 for team B
-        SpawnSoldiers(teamB, 1, Mathf.RoundToInt(gridWidth/2), gridHeight -1 );
+        SpawnSoldiers(teamB, 1, 0, gridHeight -1 ); //Mathf.RoundToInt(gridWidth),
         kingB = Instantiate(kingPrefab, GridPosToWorldPos(gridWidth/2, gridHeight), Quaternion.identity);
     }
     
