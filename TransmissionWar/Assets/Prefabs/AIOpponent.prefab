@@ -52,3 +52,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
+  gameManager: {fileID: 0}
+  birdMover: {fileID: 0}
