@@ -9,6 +9,7 @@ public class SoldierController : MonoBehaviour {
 		set {team = value;}
 	}
     SelectableUnit selectable;
+	public Vector2 Position;
 
 	// Use this for initialization
 	void Start () {
@@ -24,5 +25,10 @@ public class SoldierController : MonoBehaviour {
 	}
 	public void Deselect() {
 		this.selectable.Deselect();
+	}
+
+	public void ExecuteCommand(int direction){
+		this.GetComponent<MoveableUnit> ().ExecuteCommand (direction);
+		this.GetComponent<SelectableUnit> ().Deselect ();//???
 	}
 }

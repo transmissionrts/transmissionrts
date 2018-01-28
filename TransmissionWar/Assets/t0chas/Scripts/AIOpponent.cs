@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using FluentBehaviourTree;
 
-public class Soldier {
+/*public class Soldier {
 	public Vector2 Position;
-}
+}/*/
 
 public struct ScoredSoldier{
-	public Soldier Soldier;
+	public SoldierController Soldier;
 	public float LikelyToWin;
 	public int MinMovesToWin;
 }
 
-public class AIOpponent : MonoBehaviour {
+public class AIOpponent : AbstractPlayer {
 
 	public PlayerId playerId;
 
@@ -22,7 +22,7 @@ public class AIOpponent : MonoBehaviour {
 
 	GameManager gameManager;
 
-	List<ScoredSoldier> ScoreUnits(List<Soldier> units, int targetGridRow){
+	List<ScoredSoldier> ScoreUnits(List<SoldierController> units, int targetGridRow){
 
 		LogicalGrid grid = this.gameManager.GetGrid ();
 
@@ -43,8 +43,8 @@ public class AIOpponent : MonoBehaviour {
 		return scoredSoldiers;
 	}
 
-	public List<Soldier> GetMyUnits(){
-		return new List<Soldier> ();//TODO
+	public List<SoldierController> GetMyUnits(){
+		return new List<SoldierController> ();//TODO
 	}
 
 
@@ -55,7 +55,7 @@ public class AIOpponent : MonoBehaviour {
 	private AIData aiData = new AIData();
 
 	void PlayTurn(){
-		List<Soldier> myUnits = this.GetMyUnits ();
+		List<SoldierController> myUnits = this.GetMyUnits ();
 		this.aiData.myScoredUnits = this.ScoreUnits(myUnits, 0);
 
 		this.rootNode.Tick (new TimeData (Time.deltaTime));
@@ -103,9 +103,9 @@ public class AIOpponent : MonoBehaviour {
 		return node;
 	}
 
-	void Awake(){
-
-		this.gameManager = GameManager.Instance;
+	protected override void Start ()
+	{
+		base.Start ();
 
 		BehaviourTreeBuilder treeBuilder = new BehaviourTreeBuilder ();
 		this.rootNode = treeBuilder.Selector ("SomeSelector", true)
@@ -121,13 +121,8 @@ public class AIOpponent : MonoBehaviour {
 		this.rootNode = this.BuildSimpleAI ();
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+	public override void ResetTurn ()
+	{
 		
 	}
 }

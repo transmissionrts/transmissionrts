@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitSelector : MonoBehaviour {
-
     Camera cam;
 
-    public Transform selectedUnit, pigeon;
+    public Transform pigeon;
 
-    public int nextCommand;
+	public LocalPlayer localPlayer;
 
 	// Use this for initialization
 	void Start () {
+		this.localPlayer = GameObject.FindObjectOfType<LocalPlayer> ();
+
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButtonDown(0)) {
         RaycastHit hit;
         Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit);
         Vector3 point = hit.point;
@@ -28,14 +28,9 @@ public class UnitSelector : MonoBehaviour {
         if (hitTransform != null)
             if (hitTransform.name.Contains("Soldier")) {
                 Debug.Log("hit");
-                    SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
-                    su.Select();
-                    selectedUnit = hitTransform;
 
-                    MoveableUnit unit = selectedUnit.GetComponent<MoveableUnit>();
-                    unit.command = nextCommand;
-
-                    pigeon.GetComponent<BirdMover>().SetTarget(selectedUnit);
+                SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
+				this.localPlayer.SelectedUnit (su);
             }
         }
     }

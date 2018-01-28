@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class CommandPayload {
+	public Transform Target;
+	public SoldierController Solider;
+	public int Direction;
+
+}
+
 public class BirdMover : MonoBehaviour {
 
 	public Transform target;
@@ -17,8 +24,6 @@ public class BirdMover : MonoBehaviour {
 
     bool hasTarget, intercepted;
 
-    public Transform commandSelectorButtonTransform;
-
     enum FlightPhase {ToTarget, BackHome};
 
 	FlightPhase phase = FlightPhase.ToTarget;
@@ -28,6 +33,13 @@ public class BirdMover : MonoBehaviour {
 	Animator anim;
 	float lastFlap = 0f;
 	public float cruisingAltitude = 5;
+
+	CommandPayload payload;
+	Material withEnvelopeMaterial;
+	public Material noEnvelopeMaterial;
+	public Transform envelope;
+
+
 	// Use this for initialization
 	void Awake () {
 		initialPosition = transform.position;
@@ -38,12 +50,23 @@ public class BirdMover : MonoBehaviour {
 		descentLength = descentRatio * (cruisingAltitude - dropAltitude);
 	}
 
+	void Start() {
+		withEnvelopeMaterial = GetComponent<MeshRenderer> ().material;
+	}
+
+	public void SetCommand(CommandPayload payload){
+		this.payload = payload;
+	}
+
     public void SetTarget(Transform newTarget) {
         target = newTarget;
 
         if (newTarget != null) {
             targetPosition = target.position;
             phase = FlightPhase.ToTarget;
+			if (withEnvelopeMaterial != null) {
+				GetComponent<MeshRenderer>().materials = new Material[]{withEnvelopeMaterial};
+			}
         }
         else
         {
@@ -125,22 +148,34 @@ public class BirdMover : MonoBehaviour {
 
 	void dropPayload () {
 		print ("reached target, delivering payload");
-        if (!intercepted) {
-            GameObject unitSelectorObj;
-            UnitSelector unitSelector;
-            
-            unitSelectorObj = GameObject.FindGameObjectWithTag("UnitSelector");
-            unitSelector = unitSelectorObj.GetComponent<UnitSelector>();
 
-            MoveableUnit moveableUnit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-            SelectableUnit selectableUnit = unitSelector.selectedUnit.GetComponent<SelectableUnit>();
+		if (!intercepted) {
+			
+			if (this.payload != null) {
+				if (this.payload.Solider != null) {
+					this.payload.Solider.ExecuteCommand (this.payload.Direction);
+				}
+				this.payload = null;
+			}
+			GameManager.Instance.PayloadDelivered();
+		}
+		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
 
-            selectableUnit.Deselect();
+		Quaternion orientation = Quaternion.Euler(0, 0, 0);
+		Instantiate(envelope, position: rb.position, rotation: orientation);
+	}
 
-            moveableUnit.ExecuteCommand();
+	public void Go(){
+		if (!this.HasPayload ())
+			return;
+		this.SetTarget (this.payload.Target);
+	}
 
-            CommandSelectorButton commandSelectorButton = commandSelectorButtonTransform.GetComponent<CommandSelectorButton>();
-            commandSelectorButton.UnselectAll();
-            }
+	public bool HasPayload(){
+		return this.payload != null;
+	}
+
+	public void ResetPayload(){
+		this.payload = null;
 	}
 }
