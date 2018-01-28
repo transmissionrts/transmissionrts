@@ -35,6 +35,10 @@ public class BirdMover : MonoBehaviour {
 	public float cruisingAltitude = 5;
 
 	CommandPayload payload;
+	Material withEnvelopeMaterial;
+	public Material noEnvelopeMaterial;
+	public Transform envelope;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -44,6 +48,7 @@ public class BirdMover : MonoBehaviour {
 
         rb = GetComponent<Rigidbody> ();
 		descentLength = descentRatio * (cruisingAltitude - dropAltitude);
+		withEnvelopeMaterial = GetComponent<MeshRenderer> ().material;
 	}
 
 	public void SetCommand(CommandPayload payload){
@@ -56,6 +61,7 @@ public class BirdMover : MonoBehaviour {
         if (newTarget != null) {
             targetPosition = target.position;
             phase = FlightPhase.ToTarget;
+			GetComponent<MeshRenderer>().materials = new Material[]{withEnvelopeMaterial};
         }
         else
         {
@@ -137,6 +143,7 @@ public class BirdMover : MonoBehaviour {
 
 	void dropPayload () {
 		print ("reached target, delivering payload");
+
 		if (!intercepted) {
 			
 			if (this.payload != null) {
@@ -147,5 +154,9 @@ public class BirdMover : MonoBehaviour {
 			}
 			GameManager.Instance.PayloadDelivered ();
 		}
+		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
+
+		Quaternion orientation = Quaternion.Euler(0, 0, 0);
+		Instantiate(envelope, position: rb.position, rotation: orientation);
 	}
 }
