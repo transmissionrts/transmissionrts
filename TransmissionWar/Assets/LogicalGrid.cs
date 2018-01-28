@@ -141,4 +141,35 @@ public class LogicalGrid : MonoBehaviour
 			tile.OccupiedBy = soldier;
 		}
 	}
+
+	public List<Vector2> Neighbors(Vector2 currentPos) {
+		return new List<Vector2>{
+			// up 1 square
+			new Vector2(currentPos.x, currentPos.y + 1),
+			// down 1 square
+			new Vector2(currentPos.x, currentPos.y - 1),
+			// left 1 square
+			new Vector2(currentPos.x - 1, currentPos.y),
+			// right 1 square
+			new Vector2(currentPos.x + 1, currentPos.y),
+
+			// diag top right
+			new Vector2(currentPos.x + 1, currentPos.y + 1),
+			// diag top left
+			new Vector2(currentPos.x - 1, currentPos.y + 1),
+			// diag bottom left
+			new Vector2(currentPos.x - 1, currentPos.y - 1),
+			// diag bottom right
+			new Vector2(currentPos.x + 1, currentPos.y - 1)
+		};
+	}
+
+	public Vector2? OpponentNearBy(Vector2 currentPos) {
+		foreach(var nn in Neighbors(currentPos)) {
+			if (IsValidPos(nn) && !IsTileFree(nn)) {
+				return nn;
+			}
+		}
+		return null;
+	}
 }
