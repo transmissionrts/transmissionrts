@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		instance = this;//registering self to static instance
+		this.gridCreator = GameObject.FindObjectOfType<GridCreator>();
 	}
 
     private GameState currentGameState = GameState.InProgress;
