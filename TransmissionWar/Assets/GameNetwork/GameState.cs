@@ -50,7 +50,10 @@ namespace TransmissionNetworking {
 			get { return _state; }
 		}
 
-		Timer _timer;
+		public int timerDelay = 5000;
+
+		private Timer _timer;
+
 
 		// Use this for initialization
 		void Start () {
@@ -71,13 +74,12 @@ namespace TransmissionNetworking {
 		void initTimer() {
 			_state = INIT;
 			_timer = new Timer();
-			_timer.set(1000);
+			_timer.set(timerDelay);
 			_timer.start();
 		}
 
 		// Update is called once per frame
 		void Update () {
-			
 			if(NetworkServer.active) {
 				updateAsServer();	
 			}
@@ -90,7 +92,7 @@ namespace TransmissionNetworking {
 			
 		void updateAsServer() {
 			if(_timer.expired()) {
-				_timer.set(1000);
+				_timer.set(timerDelay);
 				_timer.start();
 				SendMessage((_networkState + 1) % 9);
 			}
@@ -131,7 +133,6 @@ namespace TransmissionNetworking {
 				default:
 				Debug.Log("Unknown state: " + state);
 				break;
-
 			}
 
 		}

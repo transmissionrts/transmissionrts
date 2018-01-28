@@ -28,22 +28,23 @@ public class LocalPlayer : AbstractPlayer {
 	}
 
 	public void SelectedUnit(SelectableUnit selectedUnit){
-		SoldierController soldier = selectedUnit.GetComponent<SoldierController>();
-		if (soldier != null) {
+		if (this.IsValidCommand (this.nextCommand)) {
+			SoldierController soldier = selectedUnit.GetComponent<SoldierController>();
+			if (soldier != null) {
+				
+				if (soldier.Team != GameManager.Instance.MyTeam) {
+					return;
+				}
+
+				if (this.selectedUnit != null)
+					this.selectedUnit.Deselect ();
 			
-			if (soldier.Team != GameManager.Instance.MyTeam) {
-				return;
-			}
+				this.selectedUnit = selectedUnit;
+				this.selectedUnit.Select ();
 
-			if (this.selectedUnit != null)
-				this.selectedUnit.Deselect ();
-		
-			this.selectedUnit = selectedUnit;
-			this.selectedUnit.Select ();
 
-			if (this.IsValidCommand (this.nextCommand)) {
-				this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
-				this.gameManager.EndTurn (this.playerId);
+					this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
+					this.gameManager.EndTurn (this.playerId);
 			}
 		}
 	}
