@@ -130,7 +130,7 @@ public class AIOpponent : AbstractPlayer {
 						selectedSoldier = scored.Soldier;
 						break;
 					}
-					if(selectedSoldier != null){
+					if(selectedSoldier != null) {
 						Debug.LogFormat(selectedSoldier, "{0} SelectedSoldier: {1}; moves: {2}", this.name, selectedSoldier.name, posibleMoves.Count);
 						int selectedMove = Random.Range (0, posibleMoves.Count);
 						Debug.LogFormat(this, "{0}[t:{1}].selected: {2} Move: {3}", this.name, this.turnN, selectedSoldier.name,  selectedMove);
