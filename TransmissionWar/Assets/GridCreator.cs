@@ -33,6 +33,7 @@ public class GridCreator : MonoBehaviour {
         
         for (int i = 0; i < soldierCount; i++) {
             Transform soldier = Instantiate(soldierPrefab[team], position: GridPosToWorldPos(startX + i, startY), rotation: Quaternion.Euler(0,180,0)); //rotation: orient
+			soldier.name = string.Format("{0}_{1:00}", soldierPrefab[team].name, i); 
             container.Add(soldier);
             SoldierController controller = soldier.GetComponent<SoldierController>();
         }
