@@ -6,7 +6,7 @@ public class LocalPlayer : AbstractPlayer {
 
 	private SelectableUnit selectedUnit;
 	private Transform pigeon;
-	private int nextCommand;
+	private int nextCommand = Direction.NONE;
 
 	public CommandSelectorButton commandSelectorButton;
 
@@ -16,8 +16,14 @@ public class LocalPlayer : AbstractPlayer {
 		this.commandSelectorButton = GameObject.FindObjectOfType<CommandSelectorButton> ();
 	}
 
+	public bool IsValidCommand(int direction){
+		return direction >= 0 && direction < 4;
+	}
+
 	public void SelectedCommand(int command)
 	{
+		if (!this.IsValidCommand (command))
+			return;
 		this.nextCommand = command;
 	}
 
@@ -34,10 +40,11 @@ public class LocalPlayer : AbstractPlayer {
 		
 			this.selectedUnit = selectedUnit;
 			this.selectedUnit.Select ();
-			///????
 
-			this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
-			this.gameManager.EndTurn (this.playerId);
+			if (this.IsValidCommand (this.nextCommand)) {
+				this.gameManager.IssueCommandTo (this.playerId, soldier, this.nextCommand);
+				this.gameManager.EndTurn (this.playerId);
+			}
 		}
 	}
 
@@ -45,6 +52,7 @@ public class LocalPlayer : AbstractPlayer {
 		if (this.selectedUnit != null)
 			this.selectedUnit.Deselect ();
 		this.commandSelectorButton.UnselectAll ();
+		this.nextCommand = Direction.NONE;
 	}
 
 
