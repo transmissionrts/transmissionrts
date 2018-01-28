@@ -22,7 +22,7 @@ public class BirdMover : MonoBehaviour {
 	float descentLength;
 
 
-    bool hasTarget, intercepted;
+    bool hasTarget;
 
     enum FlightPhase {ToTarget, BackHome};
 
@@ -149,17 +149,6 @@ public class BirdMover : MonoBehaviour {
 
 	void dropPayload () {
 		print ("reached target, delivering payload");
-
-		if (!intercepted) {
-			
-			if (this.payload != null) {
-				if (this.payload.Solider != null) {
-					this.payload.Solider.ExecuteCommand (this.payload.Direction);
-				}
-				this.payload = null;
-			}
-			GameManager.Instance.PayloadDelivered(this.playerId);
-		}
 		GetComponent<MeshRenderer> ().materials = new Material[]{noEnvelopeMaterial};
 		Quaternion orientation = Quaternion.Euler(0, 0, 0);
 		Vector3 dropPosition = targetPosition;
@@ -167,7 +156,10 @@ public class BirdMover : MonoBehaviour {
 		Vector3 v = rb.velocity;	// don't let the envelope be seen! 
 		v.y = 0;
 		rb.velocity = v;
-		Instantiate(envelope, position: dropPosition, rotation: orientation);
+		Transform envObj = Instantiate(envelope, position: dropPosition, rotation: orientation);
+		Envelope env = envObj.GetComponent<Envelope> ();
+		env.payload = payload;
+		env.playerId = this.playerId;
 	}
 
 	public void Go(){
