@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4003429183364166, guid: dc0b861acff88194b8c72f5f0dc38cdc, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 144.3
       objectReference: {fileID: 0}
     - target: {fileID: 4003429183364166, guid: dc0b861acff88194b8c72f5f0dc38cdc, type: 2}
       propertyPath: m_LocalPosition.y
@@ -130,7 +130,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4003429183364166, guid: dc0b861acff88194b8c72f5f0dc38cdc, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4003429183364166, guid: dc0b861acff88194b8c72f5f0dc38cdc, type: 2}
       propertyPath: m_LocalRotation.x
@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e329a3336a168d34684d03b0c2b54420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedUnit: {fileID: 0}
 --- !u!4 &821262011
 Transform:
   m_ObjectHideFlags: 0
@@ -1005,57 +1006,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 64033427790743264, guid: dc0b861acff88194b8c72f5f0dc38cdc,
-        type: 2}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1823745708038288, guid: dc0b861acff88194b8c72f5f0dc38cdc, type: 2}
       propertyPath: m_Name
       value: Pigeon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114710488286434938, guid: dc0b861acff88194b8c72f5f0dc38cdc,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1006334730}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc0b861acff88194b8c72f5f0dc38cdc, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2039790197 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1823745708038288, guid: dc0b861acff88194b8c72f5f0dc38cdc,
-    type: 2}
-  m_PrefabInternal: {fileID: 2039790196}
---- !u!114 &2039790198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2039790197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06638f9ef5927496f94498640c25bdca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1006334730}
-  speed: 10
-  flapForceMax: 30
-  flapForce: 10
-  flapInterval: 0.5
-  descentRatio: 2.5
-  dropAltitude: 0
-  cruisingAltitude: 14
---- !u!54 &2039790199
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2039790197}
-  serializedVersion: 2
-  m_Mass: 0.1
-  m_Drag: 1
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &2098733186
 Prefab:
   m_ObjectHideFlags: 0

@@ -6,7 +6,9 @@ public class UnitSelector : MonoBehaviour {
 
     Camera cam;
 
-    public Transform selectedUnit;
+    public Transform selectedUnit, pigeon;
+
+    public int nextCommand;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +31,11 @@ public class UnitSelector : MonoBehaviour {
                     SelectableUnit su = hitTransform.GetComponent<SelectableUnit>();
                     su.Select();
                     selectedUnit = hitTransform;
+
+                    MoveableUnit unit = selectedUnit.GetComponent<MoveableUnit>();
+                    unit.command = nextCommand;
+
+                    pigeon.GetComponent<BirdMover>().SetTarget(selectedUnit);
             }
         }
     }

@@ -28,9 +28,10 @@ public class CommandSelectorButton : MonoBehaviour {
         Debug.Log("Up Command Given to Pigeon");
         label.GetComponent<Text>().text = "Choose unit to send command to";
 
-        MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unit.command = Direction.UP;
-        unit.ExecuteCommand();
+        //MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
+        unitSelector.nextCommand = Direction.UP;
+        //unit.command = Direction.UP;
+        //unit.ExecuteCommand();
     }
 
     public void ButtonCommandDown()
@@ -39,9 +40,10 @@ public class CommandSelectorButton : MonoBehaviour {
         Debug.Log("Down Command Given to Pigeon");
         label.GetComponent<Text>().text = "Choose unit to send command to";
 
-        MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unit.command = Direction.DOWN;
-        unit.ExecuteCommand();
+        //MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
+        unitSelector.nextCommand = Direction.DOWN;
+        //unit.command = Direction.DOWN;
+        //unit.ExecuteCommand();
     }
 
     public void ButtonCommandLeft()
@@ -50,9 +52,10 @@ public class CommandSelectorButton : MonoBehaviour {
         Debug.Log("Left Command Given to Pigeon");
         label.GetComponent<Text>().text = "Choose unit to send command to";
 
-        MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unit.command = Direction.LEFT;
-        unit.ExecuteCommand();
+        // MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
+        unitSelector.nextCommand = Direction.LEFT;
+        //unit.command = Direction.LEFT;
+        //unit.ExecuteCommand();
     }
 
     public void ButtonCommandRight()
@@ -61,9 +64,10 @@ public class CommandSelectorButton : MonoBehaviour {
         Debug.Log("Right Command Given to Pigeon");
         label.GetComponent<Text>().text = "Choose unit to send command to";
 
-        MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
-        unit.command = Direction.RIGHT;
-        unit.ExecuteCommand();
+        //MoveableUnit unit = unitSelector.selectedUnit.GetComponent<MoveableUnit>();
+        unitSelector.nextCommand = Direction.RIGHT;
+        //unit.command = Direction.RIGHT;
+        //unit.ExecuteCommand();
     }
 
 }
