@@ -13,7 +13,7 @@ public struct ScoredSoldier{
 	public int MinMovesToWin;
 }
 
-public class AIOpponent : MonoBehaviour {
+public class AIOpponent : AbstractPlayer {
 
 	public PlayerId playerId;
 
@@ -103,9 +103,9 @@ public class AIOpponent : MonoBehaviour {
 		return node;
 	}
 
-	void Awake(){
-
-		this.gameManager = GameManager.Instance;
+	protected override void Start ()
+	{
+		base.Start ();
 
 		BehaviourTreeBuilder treeBuilder = new BehaviourTreeBuilder ();
 		this.rootNode = treeBuilder.Selector ("SomeSelector", true)
@@ -119,15 +119,5 @@ public class AIOpponent : MonoBehaviour {
 			.Build ();
 
 		this.rootNode = this.BuildSimpleAI ();
-	}
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }
