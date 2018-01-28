@@ -316,7 +316,7 @@ MonoBehaviour:
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
   m_OfflineScene: _Offline
-  m_OnlineScene: _NetworkingTest
+  m_OnlineScene: NetworkOpponentSceneTest
   m_SpawnPrefabs: []
   m_CustomConfig: 0
   m_MaxConnections: 4
